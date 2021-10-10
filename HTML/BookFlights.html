@@ -7,23 +7,24 @@
     <body>
         <form method="post" action="http://localhost:8080/Project1">
 
-        Departure location (drop down) : 
-        <UL>
-            <li>Albuquerque</li>
-            <li>Chicago</li>
-            <li>Dallas</li>
-            <li>Los Angeles</li>
-            <li>New York</li>
-        </UL>
+            <label for="Depatures">Departure location:</label>
+                <select name="Depatures" id="Depatures"> 
+                    <option value="Albuquerque">Albuquerque</option>
+                        <option value="Chicago">Chicago</option> 
+                            <option value="Dallas">Dallas</option> 
+                                <option value="Los Angeles">Los Angeles</option>
+                                    <option value="New York">New York</option>
+                            </select> 
 
-        Arrival location (drop down) : 
-        <UL>
-            <li>Albuquerque</li>
-            <li>Chicago</li>
-            <li>Dallas</li>
-            <li>Los Angeles</li>
-            <li>New York</li>
-        </UL>
+        <label for="Arrivals"> Arrival locations:</label> 
+            <select name="Arrivals" id="Arrivals"> 
+                <option value="Albuquerque">Albuquerque</option>
+                    <option value="Chicago">Chicago</option> 
+                        <option value="Dallas">Dallas</option> 
+                             <option value="Los Angeles">Los Angeles</option>
+                                 <option value="New York">New York</option>
+                    </select> 
+
 
         How many tickets would you like?
         <input type="number" name="Tickets"/><br>

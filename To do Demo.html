@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <h2>Insert item into our To Do List:</h2>
+    </head>
+    <body>
+            <form method="post" action="http://localhost:8080/To-Do-App/addNew">
+
+            Enter item id: <input name="id" type="number" required placeholder="id number" /><br/>
+            Enter item message: <input name="message" type="text" required /><br/>
+
+            Is the item complete? <br>
+            <input type="radio" name="complete" value="true" id="complete" />
+            <label for="complete">Complete</label><br>
+            <input type="radio" name="complete" value="false" id="incomplete" />
+            <label for="incomplete">Incomplete</label><br>
+
+            
+            <br><input type="submit" value="Add item">
+            </form>
+    </body>
+</html>

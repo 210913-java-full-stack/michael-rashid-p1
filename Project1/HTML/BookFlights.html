@@ -5,10 +5,10 @@
         <h3>Book A Flight</h3>
     </head>
     <body>
-        <form method="post" action="http://localhost:8080/Project1">
+        <form method="post" action="http://localhost:8080/Project1/booking">
 
-            <label for="Depatures">Departure location:</label>
-                <select name="Departures" id="Departures"> 
+            <label for="origin">Departure location:</label>
+                <select name="origin" id="origin">
                     <option value="Albuquerque">Albuquerque</option>
                         <option value="Chicago">Chicago</option> 
                             <option value="Dallas">Dallas</option> 
@@ -16,21 +16,20 @@
                                     <option value="New York">New York</option>
                             </select><br> 
 
-        <label for="Arrivals"> Arrival location:</label> 
-            <select name="Arrivals" id="Arrivals"> 
+        <label for="destination"> Arrival location:</label>
+            <select name="destination" id="destination">
                 <option value="Albuquerque">Albuquerque</option>
                     <option value="Chicago">Chicago</option> 
                         <option value="Dallas">Dallas</option> 
                              <option value="Los Angeles">Los Angeles</option>
                                  <option value="New York">New York</option>
-                    </select><br> 
+                    </select><br>
 
+            How many tickets would you like for this flight?<br>
+            <input type="number" value="num_tickets">
 
-        How many tickets would you like?
-        <input type="number" name="Tickets"/><br>
-
-        <input type="submit" value="Book tickets">
-
+        <input type="submit" value="View Flights">
+        </form>
 
     </body>
 </html>

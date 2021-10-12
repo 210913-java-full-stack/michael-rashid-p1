@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <h2>Welcome to Project Airlines!</h2>
+    <h3>Admin Menu</h3>
+</head>
+<body>
+<form method="post" action="http://localhost:8080/Project1/schedule">
+
+    <label for="origin">Departure location:</label>
+    <select name="origin" id="origin">
+        <option value="Albuquerque">Albuquerque</option>
+        <option value="Chicago">Chicago</option>
+        <option value="Dallas">Dallas</option>
+        <option value="Los Angeles">Los Angeles</option>
+        <option value="New York">New York</option>
+    </select><br>
+
+    <label for="destination"> Arrival location:</label>
+    <select name="destination" id="destination">
+        <option value="Albuquerque">Albuquerque</option>
+        <option value="Chicago">Chicago</option>
+        <option value="Dallas">Dallas</option>
+        <option value="Los Angeles">Los Angeles</option>
+        <option value="New York">New York</option>
+    </select><br>
+
+    <label for="flight_date">Flight date:</label>
+    <input type="date" id="flight_date" name="flight_date"
+           value="2021-10-13"
+           min="2021-10-20" max="2022-12-31">
+
+    <br><input type="submit" value="Schedule Flight">
+</form>
+</body>
+</html>

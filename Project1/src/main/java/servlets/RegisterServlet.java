@@ -1,5 +1,8 @@
 package servlets;
 
+import models.User;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,9 +24,18 @@ public class RegisterServlet extends HttpServlet {
         System.out.println("Received user: " + fName + " | " + lName + " | " +
                 username + " | " + password);
 
+        //name validation here
+
+        User newUser = new User(fName,lName,username,password);
+
+        //insert newUser's info into the user_info table.
+
         resp.setContentType("text/plain");
 
         PrintWriter out = resp.getWriter();
         out.println("Received user information!");
+
+        //RequestDispatcher view = req.getRequestDispatcher("HTML/Login.html");
+        //view.forward(req,resp);
     }
 }

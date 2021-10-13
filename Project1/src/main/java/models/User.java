@@ -5,12 +5,14 @@ public class User {
     private String lName;
     private String username;
     private String password;
+    private String role;
 
-    public User(String fName, String lName, String username, String password) {
+    public User(String fName, String lName, String username, String password, String role) {
         this.fName = fName;
         this.lName = lName;
         this.username = username;
         this.password = password;
+        this.role = role;
     }
 
     public String getfName() {
@@ -44,4 +46,8 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getRole() {return role;}
+
+    public void setRole(String role) {this.role = role;}
 }

@@ -18,7 +18,7 @@ public class ScheduleFlightServlet extends HttpServlet {
 
         //check if flight already exists
 
-        System.out.println("Scheduling on" + flight_date + " a flight from " + origin + " to " + destination);
+        System.out.println("Scheduling on " + flight_date + " a flight from " + origin + " to " + destination);
 
         //insert flight into flights table
 

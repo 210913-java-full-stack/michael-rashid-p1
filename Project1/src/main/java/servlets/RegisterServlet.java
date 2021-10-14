@@ -1,6 +1,8 @@
 package servlets;
 
 import models.User;
+import services.RegisterService;
+import utils.NameValidation;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
@@ -22,42 +24,37 @@ public class RegisterServlet extends HttpServlet {
         String password = req.getParameter("password");
         String role = req.getParameter("role");
 
-
         System.out.println("Received user: " + fName + " | " + lName + " | " +
                 username + " | " + password + " | " + role);
 
         //name validation here
+        if(NameValidation.isValidString(fName) && NameValidation.isValidString(lName)) {
+            if (RegisterService.uniqueUsername(username))
+            {
+                User newUser = new User(fName,lName,username,password,role);
+                RegisterService.saveNewUser(newUser);
+            }
+            else
+            {
+                //throw custom exception to log?
+                resp.setContentType("text/plain");
 
-        User newUser = new User(fName,lName,username,password,role);
+                PrintWriter out = resp.getWriter();
+                out.println("User not registered. Username must be unique. Please refresh and try again.");
+            }
+        }
+        else
+        {
+            //throw custom exception to log to a file?
+            resp.setContentType("text/plain");
 
-
-        // Attempts to redirect to next web page, getting 404 error currently
-        resp.sendRedirect("HTML/Login.html");
+            PrintWriter out = resp.getWriter();
+            out.println("User not registered. First and/or Last name contained invalid characters.\n" +
+                    "Please go back and try again.");
+        }
 
         //insert newUser's info into the user_info table.
+        //RegisterService.saveNewUser(newUser);
 
-//        // get response writer
-//        PrintWriter writer = resp.getWriter();
-//
-//        // build HTML code
-//        String htmlRespone = "<html>";
-//        htmlRespone += "<h2>Your username is: " + username + "<br/>";
-//        htmlRespone += "Your password is: " + password + "</h2>";
-//        htmlRespone += "<a href=\"HTML/BookFlights.html\"> Click me to Book a Flight </a>";
-//        htmlRespone += "</html>";
-//
-//        // return response
-//        writer.println(htmlRespone);
-
-
-
-
-//        resp.setContentType("text/plain");
-//
-//        PrintWriter out = resp.getWriter();
-//        out.println("Received user information!");
-
-        //RequestDispatcher view = req.getRequestDispatcher("HTML/Login.html");
-        //view.forward(req,resp);
     }
 }

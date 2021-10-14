@@ -18,6 +18,8 @@ public class BookFlightServlet extends HttpServlet {
         int num_tickets = Integer.parseInt(req.getParameter("num_tickets"));
 
         //insert ticket amount checking here.
+
+
         System.out.println("Booking " + num_tickets + " ticket(s) from " + origin + " to " + destination);
 
         //insert tickets into user_flights junction table, origin+destination will get us the-

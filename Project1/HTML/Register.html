@@ -5,7 +5,7 @@
         <h3>Register a new user</h3>
     </head>
     <body>
-            <form method="post" action="http://localhost:8080/Project1/register">
+            <form id="registerForm">
                 Enter your First Name: <input type="text" name="fName"/><br><br>
                 Enter your Last Name: <input type="text" name="lName"/> <br><br>
                 Enter your Username: <input type="text" name="username" /><br><br>
@@ -16,7 +16,15 @@
                     <option value="Pilot">Pilot</option>
                 </select><br><br>
             
-            <a href="Login.html"><input type="submit" value="Register"></a>
+            <input type="submit" value="Register">
             </form>
+            <script>
+            const form = document.getElementById("registerForm");
+            form.addEventListener("submit", (event) => {
+                console.log(test);
+                event.preventDefault();
+                console.log(event);
+            });
+            </script>
     </body>
 </html>

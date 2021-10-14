@@ -20,7 +20,6 @@ public class LoginServlet extends HttpServlet {
 
         //password validation here
 
-        //maybe try storing this data as a cookie that lasts like 30 minutes?
 
         resp.setContentType("text/plain");
 

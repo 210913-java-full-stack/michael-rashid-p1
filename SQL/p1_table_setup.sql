@@ -16,6 +16,7 @@ CREATE TABLE flights
     destination_city VARCHAR(100),
     destination_state VARCHAR(2),
     num_seats		INT,
+    takeoff_status BOOL,
     CONSTRAINT flights_pk PRIMARY KEY (flight_id)
 );
 

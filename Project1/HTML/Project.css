@@ -8,4 +8,10 @@ body {
 
 }
 
+select {
+    margin: 10px;
+}
 
+submit {
+    margin: 10px;
+}

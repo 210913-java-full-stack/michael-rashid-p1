@@ -27,6 +27,13 @@ public class FlightRepo {
         return null;
     }
 
+    //get Flight by info
+    public Flight getFlightByInfo(String origin, String destination, String date)
+    {
+        //hibernate logic
+        return null;
+    }
+
     //get list of all flights
     public List<Flight> getAllFlights()
     {

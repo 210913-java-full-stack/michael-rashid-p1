@@ -1,5 +1,7 @@
 package servlets;
 
+import services.LoginService;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,12 +21,18 @@ public class LoginServlet extends HttpServlet {
         System.out.println("Received user: " + username + " | " + password);
 
         //password validation here
+        if(LoginService.checkPassword(username,password))
+        {
+            //what do we return when we successfully login?
+        }
+        else
+        {
+            resp.setContentType("text/plain");
 
-
-        resp.setContentType("text/plain");
-
-        PrintWriter out = resp.getWriter();
-        out.println("Received user information!");
+            PrintWriter out = resp.getWriter();
+            out.println("Incorrect username and password combination.\n" +
+                    "Please go back and try again.");
+        }
     }
 
 

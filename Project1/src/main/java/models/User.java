@@ -1,6 +1,10 @@
 package models;
 
+
 public class User {
+
+
+    private int user_id;
     private String fName;
     private String lName;
     private String username;

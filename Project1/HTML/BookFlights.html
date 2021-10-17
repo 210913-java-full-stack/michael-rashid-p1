@@ -9,28 +9,37 @@
     <body>
         <form method="post" action="http://localhost:8080/Project1/booking">
 
-            <label for="origin">Departure location:</label>
-                <select name="origin" id="origin">
-                    <option value="Albuquerque">Albuquerque</option>
-                        <option value="Chicago">Chicago</option> 
-                            <option value="Dallas">Dallas</option> 
-                                <option value="Los Angeles">Los Angeles</option>
-                                    <option value="New York">New York</option>
-                            </select><br> 
+<!--            <label for="origin">Departure location:</label>-->
+<!--                <select name="origin" id="origin">-->
+<!--                    <option value="Albuquerque">Albuquerque</option>-->
+<!--                        <option value="Chicago">Chicago</option> -->
+<!--                            <option value="Dallas">Dallas</option> -->
+<!--                                <option value="Los Angeles">Los Angeles</option>-->
+<!--                                    <option value="New York">New York</option>-->
+<!--                            </select><br> -->
 
-        <label for="destination"> Arrival location:</label>
-            <select name="destination" id="destination">
-                <option value="Albuquerque">Albuquerque</option>
-                    <option value="Chicago">Chicago</option> 
-                        <option value="Dallas">Dallas</option> 
-                             <option value="Los Angeles">Los Angeles</option>
-                                 <option value="New York">New York</option>
-                    </select><br>
+<!--        <label for="destination"> Arrival location:</label>-->
+<!--            <select name="destination" id="destination">-->
+<!--                <option value="Albuquerque">Albuquerque</option>-->
+<!--                    <option value="Chicago">Chicago</option> -->
+<!--                        <option value="Dallas">Dallas</option> -->
+<!--                             <option value="Los Angeles">Los Angeles</option>-->
+<!--                                 <option value="New York">New York</option>-->
+<!--                    </select><br>-->
 
-            <!--Check what dates exist for a flight between origin and destination.
-            Then go to another page to pick a date and then how many tickets.-->
+            <!--OKAY TABLE OF ALL FLIGHTS AVAILABLE (still accepting tickets) SORTED BY ORIGIN, this includes the column with available seats so that works!! -->
 
-        <input type="submit" value="View Flights">
+            Enter the flight_id for the flight you'd like to book tickets for:<br>
+            <input type="number" value="flight_id"
+                   value = "0"
+                   min = "0" max = "40"><br><br>
+            <!--Will check if flight_id exists.-->
+            How many tickets would you like for this flight?<br>
+            <input type="number" value="num_tickets"
+                   value = "0"
+                   min = "0" max = "4"><br><br>
+            <!--Will check if seat number is valid.-->
+        <input type="submit" value="Book Tickets">
         </form>
 
     </body>

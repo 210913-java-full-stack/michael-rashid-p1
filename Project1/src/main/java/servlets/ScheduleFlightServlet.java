@@ -28,7 +28,7 @@ public class ScheduleFlightServlet extends HttpServlet {
         }
         else
         {
-            Flight flight = new Flight(origin,destination,50,false);
+            Flight flight = new Flight(origin,destination,50,false, flight_date);
             System.out.println("Scheduling on " + flight_date + " a flight from " + origin + " to " + destination);
             FlightService.saveNewFlight(flight);
 

@@ -9,11 +9,12 @@ public class Flight {
     String flight_date;
 
 
-    public Flight(String origin_city, String destination_city, int num_seats, boolean take_off_status) {
+    public Flight(String origin_city, String destination_city, int num_seats, boolean take_off_status, String flight_date) {
         this.origin_city = origin_city;
         this.destination_city = destination_city;
         this.num_seats = num_seats;
         this.take_off_status = take_off_status;
+        this.flight_date = flight_date;
     }
 
     public String getOrigin_city() {

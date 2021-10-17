@@ -24,6 +24,7 @@ public class LoginServlet extends HttpServlet {
         if(LoginService.checkPassword(username,password))
         {
             //what do we return when we successfully login?
+
         }
         else
         {

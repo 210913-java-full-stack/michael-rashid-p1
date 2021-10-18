@@ -8,11 +8,11 @@
     <h3>Admin Menu</h3>
 </head>
 <body>
-<form method="post" action="http://localhost:8080/Project1/schedule">
+<form id="scheduleForm">
 
     <label for="origin">Departure location:</label>
     <select name="origin" id="origin">
-        <option value="Albuquerque">Albuquerque</option>
+        <option value="Albuquerque" selected>Albuquerque</option>
         <option value="Chicago">Chicago</option>
         <option value="Dallas">Dallas</option>
         <option value="Los Angeles">Los Angeles</option>
@@ -21,7 +21,7 @@
 
     <label for="destination"> Arrival location:</label>
     <select name="destination" id="destination">
-        <option value="Albuquerque">Albuquerque</option>
+        <option value="Albuquerque" selected>Albuquerque</option>
         <option value="Chicago">Chicago</option>
         <option value="Dallas">Dallas</option>
         <option value="Los Angeles">Los Angeles</option>
@@ -35,5 +35,36 @@
 
     <br><input type="submit" value="Schedule Flight">
 </form>
+
+<script>
+                const form = document.getElementById("scheduleForm");
+
+                form.addEventListener("submit", function(event) {
+                    event.preventDefault();
+                    console.log(origin.value);
+                    console.log(destination.value);
+                    console.log(flight_date.value);
+                    submitForm(origin.value, destination.value,flight_date.value);
+                    });
+
+                    async function submitForm(originVal, destinationVal, flightDateVal) {
+                        let formObject = {
+                            origin: originVal,
+                            destination: destinationVal,
+                            flight_date: flightDateVal,
+                            num_seats: 50,
+                            take_off_status: false
+                        }
+
+                        console.log(formObject);
+
+                        let response = await fetch("http://localhost:8080/project1/schedule", {
+                            method: "POST",
+                            headers: {"Content-Type":"application/json"},
+                            body: JSON.stringify(formObject)
+                        });
+
+                    }
+            </script>
 </body>
 </html>

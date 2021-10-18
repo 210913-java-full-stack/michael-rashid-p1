@@ -1,31 +1,58 @@
 package services;
 
 import models.Flight;
+import models.User;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import repos.FlightRepo;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
+
 public class FlightService {
-    private static FlightRepo flightRepo;
+    private static SessionFactory sessionFactory = ServiceHolder.getSessionFactory();
+    private static Session session = ServiceHolder.getSession();
 
     public static void init()
     {
-        if(flightRepo == null)
-        {
-            flightRepo = new FlightRepo();
-        }
+
     }
 
-    public static boolean flightExists(String origin, String destination, String date)
+    public static boolean flightExists(String origin, String destination, String flight_date)
     {
-        return flightRepo.getFlightByInfo(origin, destination, date) != null;
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Flight> query = builder.createQuery(Flight.class);
+        Root<Flight> root = query.from(Flight.class);
+        query.select(root).where(builder.equal(root.get("origin"), origin), builder.equal(root.get("destination"),destination), builder.equal(root.get("flight_date"),flight_date));
+        List<Flight> flightList = session.createQuery(query).getResultList();
+
+        //if the flightlist is not empty, then the flight already exists - false would return true for this boolean
+        //if it is empty, then the flight does not exist - true would return false for this boolean
+        return !flightList.isEmpty();
     }
 
     public static void saveNewFlight(Flight newFlight)
     {
-        flightRepo.save(newFlight);
+        session.save(newFlight);
     }
 
-//    public static int availableSeats(Flight flight)
-//    {
-//
-//    }
+    public static int availableSeats(int id)
+    {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Flight> query = builder.createQuery(Flight.class);
+        Root<Flight> root = query.from(Flight.class);
+        query.select(root).where(builder.equal(root.get("flight_id"),id));
+        List<Flight> flightList = session.createQuery(query).getResultList();
+
+        int availableSeats = 0;
+
+        for(Flight flight : flightList)
+        {
+            availableSeats = flight.getNum_seats();
+        }
+
+        return availableSeats;
+    }
 }

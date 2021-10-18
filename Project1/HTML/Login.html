@@ -13,6 +13,48 @@
             
             <input type="submit" value="Log In">
             </form>
-    <!--Once password is validated on servlet, return role so I can direct them to the correct home page?-->
+
+            <script>
+                const form = document.getElementById("registerForm");
+
+                form.addEventListener("submit", function(event) {
+                    event.preventDefault();
+                    console.log(fName.value);
+                    console.log(lName.value);
+                    console.log(username.value);
+                    console.log(password.value);
+                    console.log(roles.value);
+                    submitForm(fName.value,lName.value,username.value,password.value,roles.value);
+                    });
+
+                    async function submitForm(fNameVal,lNameVal,usernameVal,passwordVal,roleVal) {
+                        let formObject = {
+                            fName: fNameVal,
+                            lName: lNameVal,
+                            username: usernameVal,
+                            password: passwordVal,
+                            role: roleVal
+                        }
+
+                        console.log(formObject);
+
+                        let response = await fetch("http://localhost:8080/project1/register", {
+                            method: "POST",
+                            headers: {"Content-Type":"application/json"},
+                            body: JSON.stringify(formObject)
+                        });
+
+                        if(
+
+                        navigateToLogin();
+                    }
+
+                    //Javascript to navigate like a link
+                    function navigateToLogin() {
+                        console.log("logged in");
+                        window.location.href = "Login.html";
+                    }
+                    //function navigate(location) {window.location.href = location;}
+            </script>
     </body>
 </html>

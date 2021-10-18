@@ -1,36 +1,63 @@
 package models;
 
+import javax.persistence.*;
+import java.util.LinkedList;
+import java.util.List;
+
+@Entity
+@Table(name="flights")
 public class Flight {
 
-    String origin_city;
-    String destination_city;
-    int num_seats;
-    boolean take_off_status;
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int flight_id;
+
+    @Column
+    String origin;
+
+    @Column
+    String destination;
+
+    @Column
     String flight_date;
 
+    @Column
+    int num_seats;
 
-    public Flight(String origin_city, String destination_city, int num_seats, boolean take_off_status, String flight_date) {
-        this.origin_city = origin_city;
-        this.destination_city = destination_city;
-        this.num_seats = num_seats;
-        this.take_off_status = take_off_status;
-        this.flight_date = flight_date;
+    @Column
+    boolean take_off_status;
+
+    @OneToMany(mappedBy="flight")
+    private List<Ticket> ticketList = new LinkedList<>();
+
+    public Flight() {
+
     }
 
-    public String getOrigin_city() {
-        return origin_city;
+    public Flight(String origin, String destination, String date)
+    {
+        this.origin = origin;
+        this.destination = destination;
+        flight_date = date;
+        num_seats = 50;
+        take_off_status = false;
+    }
+
+    public String getOrigin() {
+        return origin;
     }
 
     public void setOrigin_city(String origin_city) {
-        this.origin_city = origin_city;
+        this.origin = origin_city;
     }
 
-    public String getDestination_city() {
-        return destination_city;
+    public String getDestination() {
+        return destination;
     }
 
     public void setDestination_city(String destination_city) {
-        this.destination_city = destination_city;
+        this.destination = destination_city;
     }
 
     public int getNum_seats() {
@@ -55,5 +82,21 @@ public class Flight {
 
     public void setFlight_date(String flight_date) {
         this.flight_date = flight_date;
+    }
+
+    public int getFlight_id() {
+        return flight_id;
+    }
+
+    public void setFlight_id(int flight_id) {
+        this.flight_id = flight_id;
+    }
+
+    public List<Ticket> getTicketList() {
+        return ticketList;
+    }
+
+    public void setTicketList(List<Ticket> ticketList) {
+        this.ticketList = ticketList;
     }
 }

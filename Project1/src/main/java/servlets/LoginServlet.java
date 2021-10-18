@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 public class LoginServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
 
         String username = req.getParameter("username");
@@ -24,6 +24,7 @@ public class LoginServlet extends HttpServlet {
         if(LoginService.checkPassword(username,password))
         {
             //what do we return when we successfully login?
+
 
         }
         else

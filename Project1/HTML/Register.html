@@ -3,29 +3,64 @@
     <head>
         <link rel="stylesheet" href="Project.css">
         <h2>Welcome to Project Airlines!</h2>
-        <h3>Register a new user</h3>
+        <h3>Register a new user:</h3>
     </head>
     <body>
             <form id="registerForm">
-                Enter your First Name: <input type="text" name="fName"/><br><br>
-                Enter your Last Name: <input type="text" name="lName"/> <br><br>
-                Enter your Username: <input type="text" name="username" /><br><br>
-                Enter your Password: <input type="password" name="password"/> <br><br>
+                Enter your First Name: <input type="text" id="fName"/><br><br>
+                Enter your Last Name: <input type="text" id="lName"/> <br><br>
+                Enter your Username: <input type="text" id="username" /><br><br>
+                Enter your Password: <input type="password" id="password"/> <br><br>
                 Select your Role: <select id="roles" name="role">
                     <option value="Passenger">Passenger</option>
                     <option value="Admin">Administrator</option>
                     <option value="Pilot">Pilot</option>
                 </select><br><br>
             
-            <input type="submit" value="Register">
+            <!--<input type="submit" value="Register">-->
+                <button type="submit">Register User</button>
             </form>
+            <br><br>
+
             <script>
-            const form = document.getElementById("registerForm");
-            form.addEventListener("submit", (event) => {
-                console.log(test);
-                event.preventDefault();
-                console.log(event);
-            });
+                const form = document.getElementById("registerForm");
+
+                form.addEventListener("submit", function(event) {
+                    event.preventDefault();
+                    console.log(fName.value);
+                    console.log(lName.value);
+                    console.log(username.value);
+                    console.log(password.value);
+                    console.log(roles.value);
+                    submitForm(fName.value,lName.value,username.value,password.value,roles.value);
+                    });
+
+                    async function submitForm(fNameVal,lNameVal,usernameVal,passwordVal,roleVal) {
+                        let formObject = {
+                            fName: fNameVal,
+                            lName: lNameVal,
+                            username: usernameVal,
+                            password: passwordVal,
+                            role: roleVal
+                        }
+
+                        console.log(formObject);
+
+                        let response = await fetch("http://localhost:8080/project1/register", {
+                            method: "POST",
+                            headers: {"Content-Type":"application/json"},
+                            body: JSON.stringify(formObject)
+                        });
+
+                        navigateToLogin();
+                    }
+
+                    //Javascript to navigate like a link
+                    function navigateToLogin() {
+                        console.log("logged in");
+                        window.location.href = "Login.html";
+                    }
+                    //function navigate(location) {window.location.href = location;}
             </script>
     </body>
 </html>

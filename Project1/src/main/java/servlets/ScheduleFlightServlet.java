@@ -1,6 +1,8 @@
 package servlets;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Flight;
+import models.User;
 import services.FlightService;
 
 import javax.servlet.ServletException;
@@ -8,34 +10,32 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
 
 public class ScheduleFlightServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
 
-        String origin = req.getParameter("origin");
-        String destination = req.getParameter("destination");
-        String flight_date = req.getParameter("flight_date");
+        InputStream requestBody = req.getInputStream();
+        Scanner sc = new Scanner(requestBody, StandardCharsets.UTF_8.name());
+        String jsonText = sc.useDelimiter("\\A").next();
+        ObjectMapper objectMapper = new ObjectMapper();
+        Flight payload = objectMapper.readValue(jsonText,Flight.class);
 
         //check if flight already exists
-        if(FlightService.flightExists(origin, destination, flight_date))
+        if(FlightService.flightExists(payload.getOrigin(),payload.getDestination(),payload.getFlight_date()))
         {
             resp.setContentType("text/plain");
-            resp.getWriter().println("Flight already exists from " + origin + " " +
-                    "to " + destination + " on " + flight_date + ". Please try again.");
+            resp.getWriter().println("Flight already exists!");
         }
         else
         {
-            Flight flight = new Flight(origin,destination,50,false, flight_date);
-            System.out.println("Scheduling on " + flight_date + " a flight from " + origin + " to " + destination);
-            FlightService.saveNewFlight(flight);
-
-            resp.setContentType("text/plain");
-
-            PrintWriter out = resp.getWriter();
-            out.println("Flight scheduled successfully!");
+            System.out.println("Scheduling new flight | " + payload.getOrigin());
+            FlightService.saveNewFlight(payload);
         }
     }
 

@@ -39,6 +39,8 @@ public class RegisterServlet extends HttpServlet {
 
                 //throw custom exception?
                 resp.setContentType("text/plain");
+                resp.setStatus(406);
+
 
                 PrintWriter out = resp.getWriter();
                 out.println("User not registered. Username must be unique. Please go back and try again.");

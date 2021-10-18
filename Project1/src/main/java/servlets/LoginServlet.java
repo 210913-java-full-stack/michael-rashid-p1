@@ -14,7 +14,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-
+        //change to inputstream requestbody
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
@@ -30,6 +30,7 @@ public class LoginServlet extends HttpServlet {
         else
         {
             resp.setContentType("text/plain");
+            //401 unauthorized response
 
             PrintWriter out = resp.getWriter();
             out.println("Incorrect username and password combination.\n" +

@@ -2,17 +2,13 @@ package repos;
 
 import models.Flight;
 import models.User;
-import utils.ConnectionManager;
-
-import java.sql.Connection;
 import java.util.List;
 
 public class FlightRepo {
-    private Connection conn;
 
     public FlightRepo()
     {
-        this.conn = ConnectionManager.getConnection();
+
     }
 
     //save new flight

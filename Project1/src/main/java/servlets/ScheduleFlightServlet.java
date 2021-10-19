@@ -2,7 +2,6 @@ package servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Flight;
-import models.User;
 import services.FlightService;
 
 import javax.servlet.ServletException;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
@@ -27,9 +25,10 @@ public class ScheduleFlightServlet extends HttpServlet {
         Flight payload = objectMapper.readValue(jsonText,Flight.class);
 
         //check if flight already exists
-        if(FlightService.flightExists(payload.getOrigin(),payload.getDestination(),payload.getFlight_date()))
+        if(FlightService.flightExistsByInfo(payload.getOrigin(),payload.getDestination(),payload.getFlight_date()))
         {
             resp.setContentType("text/plain");
+            resp.setStatus(406);
             resp.getWriter().println("Flight already exists!");
         }
         else

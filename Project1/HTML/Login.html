@@ -6,47 +6,60 @@
         <h3>Login Below</h3>
     </head>
     <body>
-            <form method="post" action="http://localhost:8080/Project1/login">
+            <form id="loginForm">
 
-            Enter your username: <input type="text" name="username" /><br>
-            Enter your password: <input type="password" name="password"/> <br>
+            Enter your username: <input type="text" id="username" /><br>
+            Enter your password: <input type="password" id="password"/> <br>
             
             <input type="submit" value="Log In">
             </form>
 
             <script>
-                const form = document.getElementById("registerForm");
+                const form = document.getElementById("loginForm");
 
                 form.addEventListener("submit", function(event) {
                     event.preventDefault();
-                    console.log(fName.value);
-                    console.log(lName.value);
                     console.log(username.value);
                     console.log(password.value);
-                    console.log(roles.value);
-                    submitForm(fName.value,lName.value,username.value,password.value,roles.value);
+                    submitForm(username.value, password.value);
                     });
 
-                    async function submitForm(fNameVal,lNameVal,usernameVal,passwordVal,roleVal) {
+                    async function submitForm(usernameVal,passwordVal) {
                         let formObject = {
-                            fName: fNameVal,
-                            lName: lNameVal,
                             username: usernameVal,
                             password: passwordVal,
-                            role: roleVal
                         }
 
                         console.log(formObject);
 
-                        let response = await fetch("http://localhost:8080/project1/register", {
+                        let response = await fetch("http://localhost:8080/project1/login", {
                             method: "POST",
                             headers: {"Content-Type":"application/json"},
                             body: JSON.stringify(formObject)
                         });
 
-                        if(
-
-                        navigateToLogin();
+                        if(response.status != 200)
+                        {
+                            return response.text().then(function(text) {
+                                document.getElementById("registerForm").reset();
+                                alert(text);
+                            });
+                        }
+                        else
+                        {
+                        //come back to this because it isn't working :(
+                           return response.text().then(function(text) {
+                                console.log(text);
+                                if(text === "Passenger")
+                                {
+                                    window.location.href = "PassengerMenu.html";
+                                }
+                                else if(text == "Admin")
+                                {
+                                    window.location.href = "AdminMenu.html";
+                                }
+                           });
+                        }
                     }
 
                     //Javascript to navigate like a link
@@ -54,7 +67,8 @@
                         console.log("logged in");
                         window.location.href = "Login.html";
                     }
-                    //function navigate(location) {window.location.href = location;}
+                    function navigate(location) {window.location.href = location;}
             </script>
+
     </body>
 </html>

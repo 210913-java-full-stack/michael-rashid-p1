@@ -32,6 +32,13 @@ public class Ticket {
         this.check_in_status = check_in_status;
     }
 
+    public Ticket(int num_tickets, boolean check_in_status, Flight flight, User user) {
+        this.num_tickets = num_tickets;
+        this.check_in_status = check_in_status;
+        this.flight = flight;
+        this.user = user;
+    }
+
     public Ticket()
     {
 

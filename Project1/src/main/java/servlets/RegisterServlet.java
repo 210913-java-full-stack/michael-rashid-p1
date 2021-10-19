@@ -18,7 +18,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class RegisterServlet extends HttpServlet {
-    //this is going to be our test servlet
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
@@ -27,11 +26,14 @@ public class RegisterServlet extends HttpServlet {
         String jsonText = sc.useDelimiter("\\A").next();
         ObjectMapper objectMapper = new ObjectMapper();
         User payload = objectMapper.readValue(jsonText,User.class);
+
+
         if(NameValidation.isValidString(payload.getfName()) && NameValidation.isValidString(payload.getlName()))
         {
             if(RegisterService.uniqueUsername(payload.getUsername()))
             {
                 RegisterService.saveNewUser(payload);
+                resp.setStatus(200);
             }
             else
             {
@@ -40,7 +42,6 @@ public class RegisterServlet extends HttpServlet {
                 //throw custom exception?
                 resp.setContentType("text/plain");
                 resp.setStatus(406);
-
 
                 PrintWriter out = resp.getWriter();
                 out.println("User not registered. Username must be unique. Please go back and try again.");
@@ -52,6 +53,7 @@ public class RegisterServlet extends HttpServlet {
 
             //throw custom exception to log to a file?
             resp.setContentType("text/plain");
+            resp.setStatus(406);
 
             PrintWriter out = resp.getWriter();
             out.println("User not registered. First and/or Last name contained invalid characters.\n" +

@@ -1,17 +1,12 @@
 package repos;
 
 import models.User;
-import utils.ConnectionManager;
-
-import java.sql.Connection;
 
 public class UserRepo {
 
-    private Connection conn;
 
     public UserRepo()
     {
-        this.conn = ConnectionManager.getConnection();
     }
 
     //save new user

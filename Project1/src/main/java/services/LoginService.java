@@ -3,18 +3,18 @@ package services;
 import models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import repos.UserRepo;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+
 import java.util.List;
 
 public class LoginService {
     private static SessionFactory sessionFactory = ServiceHolder.getSessionFactory();
     private static Session session = ServiceHolder.getSession();
 
-    public static boolean checkPassword(String username, String password)
+    public static User checkPassword(String username, String password)
     {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<User> query = builder.createQuery(User.class);
@@ -26,10 +26,38 @@ public class LoginService {
 
         List<User> userList = session.createQuery(query).getResultList();
 
-        //instead of returning bool at this point, return a new user object that you pull from this list
-        //it should only have 1 result, provided username is unique, so pull item at index 0,
-        //and then pass it back. Do a check in the servlet if the user object == null;
+        if(!userList.isEmpty())
+        {
+            User newUser = new User(userList.get(0).getfName(),
+                    userList.get(0).getlName(),
+                    userList.get(0).getUsername(),
+                    userList.get(0).getPassword(),
+                    userList.get(0).getRole());
 
-        return userList.isEmpty();
+            return newUser;
+        }
+
+        return null;
+    }
+
+    public static User getUserByUsername(String username)
+    {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+        query.select(root).where(builder.equal(root.get("username"), username));
+        List<User> userList = session.createQuery(query).getResultList();
+
+        if(!userList.isEmpty())
+        {
+            User newUser = new User(userList.get(0).getfName(),
+                    userList.get(0).getlName(),
+                    userList.get(0).getUsername(),
+                    userList.get(0).getPassword(),
+                    userList.get(0).getRole());
+
+            return newUser;
+        }
+        return null;
     }
 }

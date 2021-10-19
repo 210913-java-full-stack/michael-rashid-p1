@@ -75,4 +75,15 @@ public class FlightService {
     {
         //update the num_seats for Flight subtracting the number booked on a ticket
     }
+
+    public static List<Flight> availableFlights()
+    {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Flight> query = builder.createQuery(Flight.class);
+        Root<Flight> root = query.from(Flight.class);
+        query.select(root).where(builder.equal(root.get("take_off_status"),false)).orderBy(builder.asc(root.get("origin")));
+        List<Flight> flightList = session.createQuery(query).getResultList();
+
+        return flightList;
+    }
 }

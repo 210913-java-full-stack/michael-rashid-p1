@@ -58,6 +58,16 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>flightListServlet</servlet-name>
+        <servlet-class>servlets.FlightListServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>flightListServlet</servlet-name>
+        <url-pattern>/flightList</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>scheduleFlightServlet</servlet-name>
         <servlet-class>servlets.ScheduleFlightServlet</servlet-class>
     </servlet>
@@ -66,7 +76,5 @@
         <servlet-name>scheduleFlightServlet</servlet-name>
         <url-pattern>/schedule</url-pattern>
     </servlet-mapping>
-
-
 
 </web-app>

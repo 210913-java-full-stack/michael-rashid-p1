@@ -10,15 +10,14 @@
 <body>
 <form id="scheduleForm">
 
-    <label for="origin">Departure location:</label>
-    <select name="origin" id="origin">
+    <label for="origin_city"> Arrival location:</label>
+    <select name="origin_city" id="origin_city">
         <option value="Albuquerque" selected>Albuquerque</option>
         <option value="Chicago">Chicago</option>
         <option value="Dallas">Dallas</option>
         <option value="Los Angeles">Los Angeles</option>
         <option value="New York">New York</option>
     </select><br>
-
     <label for="destination"> Arrival location:</label>
     <select name="destination" id="destination">
         <option value="Albuquerque" selected>Albuquerque</option>
@@ -36,15 +35,15 @@
     <br><input type="submit" value="Schedule Flight">
 </form>
 
-<script>
+            <script>
                 const form = document.getElementById("scheduleForm");
 
                 form.addEventListener("submit", function(event) {
                     event.preventDefault();
-                    console.log(origin.value);
+                    console.log(origin_city.value);
                     console.log(destination.value);
                     console.log(flight_date.value);
-                    submitForm(origin.value, destination.value,flight_date.value);
+                    submitForm(origin_city.value, destination.value,flight_date.value);
                     });
 
                     async function submitForm(originVal, destinationVal, flightDateVal) {
@@ -63,7 +62,6 @@
                             headers: {"Content-Type":"application/json"},
                             body: JSON.stringify(formObject)
                         });
-
                     }
             </script>
 </body>

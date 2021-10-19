@@ -7,9 +7,24 @@
         <h3>Book A Flight</h3>
     </head>
     <body>
-        <form id="bookingForm">
-            <!--OKAY TABLE OF ALL FLIGHTS AVAILABLE (still accepting tickets) SORTED BY ORIGIN, this includes the column with available seats so that works!! -->
+    <div>
+        <center><table>
+            <thead>
+            <tr>
+                <th>Flight_Id</th>
+                <th>Origin</th>
+                <th>Destination</th>
+                <th>Flight_Date</th>
+                <th>Num_Seats</th>
+                <th>Take_Off_Status</th>
+            </tr>
+            </thead>
+            <tbody id="FlightTable">
 
+            </tbody>
+        </table></center><br><br>
+    </div>
+        <form id="bookingForm">
             Enter your username to verify your identity:<br>
             <input type="text" id="username"><br><br>
 
@@ -61,20 +76,24 @@
                         }
                         else
                         {
-                        //come back to this because it isn't working :(
-                           return response.text().then(function(text) {
-                                console.log(text);
-                                if(text === "Passenger")
-                                {
-                                    window.location.href = "PassengerMenu.html";
-                                }
-                                else if(text == "Admin")
-                                {
-                                    window.location.href = "AdminMenu.html";
-                                }
-                           });
+                            alert("Flight booked successfully!");
                         }
+
                     }
+
+            (async function getFlightList() {
+                let response = await fetch("http://localhost:8080/project1/flightList");
+                let json = await response.json();
+                let table = document.getElementById("FlightTable");
+
+                for(let element of json) {
+                    let tr = table.insertRow(-1);
+                    for(let key in element) {
+                        let cell = tr.insertCell(-1);
+                        cell.innerHTML =  element[key];
+                }
+            }
+        })();
             </script>
 
     </body>

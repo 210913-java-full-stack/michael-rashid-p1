@@ -11,7 +11,7 @@ public class User {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int user_id;
+    private Integer user_id;
 
     @Column
     private String fName;
@@ -34,7 +34,8 @@ public class User {
     public User() {
     }
 
-    public User(String fName, String lName, String username, String password, String role) {
+    public User(int user_id,String fName, String lName, String username, String password, String role) {
+        this.user_id = user_id;
         this.fName = fName;
         this.lName = lName;
         this.username = username;
@@ -78,11 +79,11 @@ public class User {
 
     public void setRole(String role) {this.role = role;}
 
-    public int getUser_id() {
+    public Integer getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(Integer user_id) {
         this.user_id = user_id;
     }
 

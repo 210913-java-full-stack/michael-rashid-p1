@@ -9,7 +9,7 @@ public class Ticket {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ticket_id;
+    private Integer ticket_id;
 
     @Column
     private int num_tickets;
@@ -60,11 +60,11 @@ public class Ticket {
         this.check_in_status = check_in_status;
     }
 
-    public int getTicket_id() {
+    public Integer getTicket_id() {
         return ticket_id;
     }
 
-    public void setTicket_id(int ticket_id) {
+    public void setTicket_id(Integer ticket_id) {
         this.ticket_id = ticket_id;
     }
 
@@ -83,4 +83,6 @@ public class Ticket {
     public void setUser(User user) {
         this.user = user;
     }
+
+
 }

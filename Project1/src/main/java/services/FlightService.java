@@ -15,11 +15,6 @@ public class FlightService {
     private static SessionFactory sessionFactory = ServiceHolder.getSessionFactory();
     private static Session session = ServiceHolder.getSession();
 
-    public static void init()
-    {
-
-    }
-
     public static boolean flightExistsByInfo(String origin, String destination, String flight_date)
     {
         CriteriaBuilder builder = session.getCriteriaBuilder();

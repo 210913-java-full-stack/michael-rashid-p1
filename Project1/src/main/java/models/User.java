@@ -1,15 +1,38 @@
 package models;
 
+import javax.persistence.*;
+import java.util.LinkedList;
+import java.util.List;
 
+@Entity
+@Table(name="users")
 public class User {
 
-
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int user_id;
+
+    @Column
     private String fName;
+
+    @Column
     private String lName;
+
+    @Column
     private String username;
+
+    @Column
     private String password;
+
+    @Column
     private String role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Ticket> ticketList = new LinkedList<>();
+
+    public User() {
+    }
 
     public User(String fName, String lName, String username, String password, String role) {
         this.fName = fName;
@@ -54,4 +77,20 @@ public class User {
     public String getRole() {return role;}
 
     public void setRole(String role) {this.role = role;}
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public List<Ticket> getTicketList() {
+        return ticketList;
+    }
+
+    public void setTicketList(List<Ticket> ticketList) {
+        this.ticketList = ticketList;
+    }
 }

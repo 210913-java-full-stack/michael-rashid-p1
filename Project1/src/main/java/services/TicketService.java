@@ -11,6 +11,7 @@ public class TicketService {
 
     public static void saveNewFlight(Ticket newTicket)
     {
+        //System.out.println(newTicket.getTicket_id());
         session.save(newTicket);
     }
 

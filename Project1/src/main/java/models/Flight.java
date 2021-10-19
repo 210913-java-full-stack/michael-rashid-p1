@@ -1,5 +1,7 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,7 +13,7 @@ public class Flight {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int flight_id;
+    private Integer flight_id;
 
     @Column
     String origin;
@@ -28,6 +30,7 @@ public class Flight {
     @Column
     boolean take_off_status;
 
+    @JsonIgnore
     @OneToMany(mappedBy="flight")
     private List<Ticket> ticketList = new LinkedList<>();
 
@@ -84,11 +87,11 @@ public class Flight {
         this.flight_date = flight_date;
     }
 
-    public int getFlight_id() {
+    public Integer getFlight_id() {
         return flight_id;
     }
 
-    public void setFlight_id(int flight_id) {
+    public void setFlight_id(Integer flight_id) {
         this.flight_id = flight_id;
     }
 

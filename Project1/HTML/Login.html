@@ -47,16 +47,20 @@
                         }
                         else
                         {
-                        //come back to this because it isn't working :(
-                           return response.text().then(function(text) {
-                                console.log(text);
-                                if(text === "Passenger")
+                            //come back to this because it isn't working :(
+                           return response.json().then(function(json) {
+                                let role = json.role;
+                                if(role == "Passenger")
                                 {
+                                    console.log("if passed");
                                     window.location.href = "PassengerMenu.html";
                                 }
-                                else if(text == "Admin")
+                                else if(role == "Admin")
                                 {
                                     window.location.href = "AdminMenu.html";
+                                }
+                                else {
+                                    window.location.href = "PilotMenu.html";
                                 }
                            });
                         }

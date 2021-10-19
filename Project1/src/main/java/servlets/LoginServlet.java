@@ -27,33 +27,23 @@ public class LoginServlet extends HttpServlet {
         ObjectMapper objectMapper = new ObjectMapper();
         Login payload = objectMapper.readValue(jsonText,Login.class);
 
-        //response setup
-        resp.setContentType("text/plain");
-        PrintWriter out = resp.getWriter();
-
         //password validation here
         User loggedIn = LoginService.checkPassword(payload.getUsername(), payload.getPassword());
         if(loggedIn != null)
         {
             resp.setStatus(200);
             System.out.println("Successful login!");
-            //get the role here
-            if(loggedIn.getRole().equals("Passenger"))
-            {
-                out.println("Passenger");
-            }
-            else if(loggedIn.getRole().equals("Admin"))
-            {
-                out.println("Admin");
-            }
-            else
-            {
-                out.println("Pilot");
-            }
+            //send back the object as json so the front end can pull the role out of it and redirect the user
+            resp.setContentType("application/json");
+            ObjectMapper mapper = new ObjectMapper();
+            resp.getWriter().write(mapper.writeValueAsString(loggedIn));
         }
         else
         {
+            //response setup
             resp.setContentType("text/plain");
+            PrintWriter out = resp.getWriter();
+
             resp.setStatus(401);
             //401 unauthorized response
 

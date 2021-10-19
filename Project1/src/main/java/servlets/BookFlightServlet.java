@@ -39,12 +39,13 @@ public class BookFlightServlet extends HttpServlet {
             out.println("Username does not exist.");
         }
         else{
+            System.out.println("Checking userid: " + currentUser.getUser_id());
             //checking if flight they're trying to book exists
             Flight currentFlight = FlightService.flightExistsById(payload.getFlight_id());
             if(currentFlight != null)
             {
                 //checking if there's enough available seats
-                if(FlightService.availableSeats(payload.getFlight_id()) <= payload.getNum_tickets())
+                if(FlightService.availableSeats(payload.getFlight_id()) >= payload.getNum_tickets())
                 {
                     //then they can book the flight. add ticket
                     Ticket newTicket = new Ticket(payload.getNum_tickets(),false,currentFlight,currentUser);

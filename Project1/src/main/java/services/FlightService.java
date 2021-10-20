@@ -1,14 +1,13 @@
 package services;
 
 import models.Flight;
+import models.Ticket;
 import models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import repos.FlightRepo;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 public class FlightService {
@@ -76,12 +75,11 @@ public class FlightService {
         //update the num_seats for Flight subtracting the number booked on a ticket
     }
 
-    public static List<Flight> availableFlights()
-    {
+    public static List<Flight> availableFlights() {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Flight> query = builder.createQuery(Flight.class);
         Root<Flight> root = query.from(Flight.class);
-        query.select(root).where(builder.equal(root.get("take_off_status"),false)).orderBy(builder.asc(root.get("origin")));
+        query.select(root).where(builder.equal(root.get("take_off_status"), false)).orderBy(builder.asc(root.get("origin")));
         List<Flight> flightList = session.createQuery(query).getResultList();
 
         return flightList;

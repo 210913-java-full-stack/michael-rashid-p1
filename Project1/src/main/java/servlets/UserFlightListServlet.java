@@ -1,9 +1,13 @@
 package servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import models.Flight;
 import models.Login;
+import models.Ticket;
 import models.User;
+import services.FlightService;
 import services.LoginService;
+import services.TicketService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,43 +17,35 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Scanner;
 
-public class LoginServlet extends HttpServlet {
-
+public class UserFlightListServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
-    {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         InputStream requestBody = req.getInputStream();
         Scanner sc = new Scanner(requestBody, StandardCharsets.UTF_8.name());
         String jsonText = sc.useDelimiter("\\A").next();
         ObjectMapper objectMapper = new ObjectMapper();
         Login payload = objectMapper.readValue(jsonText,Login.class);
 
-        //password validation here
-        User loggedIn = LoginService.checkPassword(payload.getUsername(), payload.getPassword());
-        if(loggedIn != null)
+        //get user ID from username
+        User currentUser = LoginService.getUserByUsername(payload.getUsername());
+        if(currentUser != null)
         {
-            resp.setStatus(200);
-            System.out.println("Successful login!");
-            //send back the object as json so the front end can pull the role out of it and redirect the user
-            resp.setContentType("application/json");
+            List<Ticket> ticketList = TicketService.getTicketsByUser(currentUser.getUser_id());
             ObjectMapper mapper = new ObjectMapper();
-            resp.getWriter().write(mapper.writeValueAsString(loggedIn));
+            resp.getWriter().write(mapper.writeValueAsString(ticketList));
+            resp.setContentType("application/json");
+            resp.setStatus(200);
         }
         else
         {
-            //response setup
+            resp.setStatus(406);
             resp.setContentType("text/plain");
-            PrintWriter out = resp.getWriter();
+           PrintWriter out = resp.getWriter();
 
-            resp.setStatus(401);
-            //401 unauthorized response
-
-            out.println("Incorrect username and password combination.\n" +
-                    "Please go back and try again.");
+           out.write("Username does not exist!");
         }
     }
-
-
 }

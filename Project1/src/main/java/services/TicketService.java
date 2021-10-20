@@ -2,8 +2,14 @@ package services;
 
 import models.Flight;
 import models.Ticket;
+import models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
 
 public class TicketService {
     private static SessionFactory sessionFactory = ServiceHolder.getSessionFactory();
@@ -13,6 +19,16 @@ public class TicketService {
     {
         //System.out.println(newTicket.getTicket_id());
         session.save(newTicket);
+    }
+
+    public static List<Ticket> getTicketsByUser(int id)
+    {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Ticket> query = builder.createQuery(Ticket.class);
+        Root<Ticket> root = query.from(Ticket.class);
+        query.select(root).where(builder.equal(root.get("user_id"), id));
+        List<Ticket> flightList = session.createQuery(query).getResultList();
+        return flightList;
     }
 
 }

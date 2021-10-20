@@ -50,13 +50,7 @@ public class LoginService {
 
         if(!userList.isEmpty())
         {
-            User newUser = new User(userList.get(0).getUser_id(),userList.get(0).getfName(),
-                    userList.get(0).getlName(),
-                    userList.get(0).getUsername(),
-                    userList.get(0).getPassword(),
-                    userList.get(0).getRole());
-
-            return newUser;
+            return userList.get(0);
         }
         return null;
     }

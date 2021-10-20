@@ -5,6 +5,77 @@
     <title>Title</title>
 </head>
 <body>
+<div>
+    <center><table>
+        <thead>
+        <tr>
+            <th>Ticket_Id</th>
+            <th>Num_Tickets</th>
+            <th>Check_In_Status</th>
+            <th>Flight_Id</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Flight_Date</th>
+        </tr>
+        </thead>
+        <tbody id="FlightTable">
 
+        </tbody>
+    </table></center><br><br>
+</div>
+<div>
+
+</div>
+
+            <script>
+                const form = document.getElementById("bookingForm");
+
+                form.addEventListener("submit", function(event) {
+                    event.preventDefault();
+                    console.log(username.value);
+                    submitForm(username.value);
+                    });
+
+                    async function submitForm(usernameVal) {
+                        let formObject = {
+                            username: usernameVal,
+                            password: nothing
+                        }
+
+                        console.log(formObject);
+
+                        let response = await fetch("http://localhost:8080/project1/booking", {
+                            method: "POST",
+                            headers: {"Content-Type":"application/json"},
+                            body: JSON.stringify(formObject)
+                        });
+
+                         if(response.status != 200)
+                        {
+                            return response.text().then(function(text) {
+                                document.getElementById("bookingForm").reset();
+                                alert(text);
+                            });
+                        }
+                        else
+                        {
+                            getFlightList();
+                        }
+                    }
+
+                    (async function getFlightList() {
+                        let response = await fetch("http://localhost:8080/project1/flightList");
+                        let json = await response.json();
+                        let table = document.getElementById("FlightTable");
+
+                        for(let element of json) {
+                            let tr = table.insertRow(-1);
+                            for(let key in element) {
+                                let cell = tr.insertCell(-1);
+                                cell.innerHTML =  element[key];
+                            }
+                        }
+                    });
+            </script>
 </body>
 </html>

@@ -39,7 +39,8 @@
                    min = "0" max = "4"><br><br>
             <!--Will check if seat number is valid.-->
         <input type="submit" value="Book Tickets">
-        </form>
+        </form><br><br>
+        <a href="MyFlights.html">See My Flights</a><br>
 
         <script>
                 const form = document.getElementById("bookingForm");
@@ -61,7 +62,7 @@
 
                         console.log(formObject);
 
-                        let response = await fetch("http://localhost:8080/project1/booking", {
+                        let response = await fetch("http://localhost:8080/project1/ticket", {
                             method: "POST",
                             headers: {"Content-Type":"application/json"},
                             body: JSON.stringify(formObject)
@@ -70,7 +71,6 @@
                          if(response.status != 200)
                         {
                             return response.text().then(function(text) {
-                                document.getElementById("bookingForm").reset();
                                 alert(text);
                             });
                         }
@@ -78,7 +78,6 @@
                         {
                             alert("Flight booked successfully!");
                         }
-
                     }
 
             (async function getFlightList() {

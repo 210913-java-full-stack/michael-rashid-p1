@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="Project.css">
     <title>Title</title>
 </head>
 <body>
@@ -22,16 +23,44 @@
 
         </tbody>
     </table></center><br><br>
+    <div id="usernameDiv">
+    <form id="usernameForm">
+        Enter your username to view your tickets:<br>
+        <input type="text" id="username"><br><br>
+
+        <!--Will check if seat number is valid.-->
+        <input type="button" id="userSubmit" value="Submit Username">
+    </form><br><br></div>
+    <div id="cancelDiv">
+        <form id="cancelForm" method="delete" action="http://localhost:8080/project1/ticket">
+        Enter the ticket_id for the flight you'd like to cancel your tickets for:<br>
+        <input type="number" id="ticket_id"
+               value = "0"
+               min = "0" max = "40"><br><br>
+        <!--Will check if flight_id exists.-->
+        <input type="button" id="ticketSubmit" value="Cancel Ticket">
+    </form><br><br></div>
 </div>
 <div>
 
 </div>
 
             <script>
-                const form = document.getElementById("bookingForm");
+                //const cancelForm = document.getElementById("cancelForm");
+                //const userForm = document.getElementById("usernameForm");
+                //listen for button clicks instead since I have two forms.
+                const cancelButton = document.getElementById("ticketSubmit");
+                const userButton = document.getElementById("userSubmit");
 
-                form.addEventListener("submit", function(event) {
+                console.log(ticketSubmit);
+                console.log(userSubmit);
+
+                document.getElementById('cancelDiv').style.display="none";
+                var usernameVar = "hello";
+
+                userButton.addEventListener("click", function(event) {
                     event.preventDefault();
+                    usernameVar = username.value;
                     console.log(username.value);
                     submitForm(username.value);
                     });
@@ -39,12 +68,12 @@
                     async function submitForm(usernameVal) {
                         let formObject = {
                             username: usernameVal,
-                            password: nothing
+                            password: "nothing"
                         }
 
                         console.log(formObject);
 
-                        let response = await fetch("http://localhost:8080/project1/booking", {
+                        let response = await fetch("http://localhost:8080/project1/userFlightList", {
                             method: "POST",
                             headers: {"Content-Type":"application/json"},
                             body: JSON.stringify(formObject)
@@ -53,29 +82,74 @@
                          if(response.status != 200)
                         {
                             return response.text().then(function(text) {
-                                document.getElementById("bookingForm").reset();
                                 alert(text);
                             });
                         }
                         else
                         {
-                            getFlightList();
+                           (async function getFlightList() {
+                                let json = await response.json();
+                                let table = document.getElementById("FlightTable");
+
+                                for(let element of json) {
+                                    console.log(element);
+                                    let parsedElement = {
+                                        ticket_id: element.ticket_id,
+                                        num_tickets: element.num_tickets,
+                                        check_in_status: element.check_in_status,
+                                        flight_id: element.flight.flight_id,
+                                        flight_origin: element.flight.origin,
+                                        flight_destination: element.flight.destination,
+                                        flight_date: element.flight.flight_date
+                                  }
+
+                                    let tr = table.insertRow(-1);
+                                    for(let key in parsedElement) {
+                                        let cell = tr.insertCell(-1);
+                                        cell.innerHTML =  parsedElement[key];
+                                    }
+                                }
+                           })();
+
+                           (function showCancelForm(){
+                                document.getElementById('cancelDiv').style.display="block";
+                                document.getElementById('usernameDiv').style.display="none";
+                            })();
                         }
                     }
 
-                    (async function getFlightList() {
-                        let response = await fetch("http://localhost:8080/project1/flightList");
-                        let json = await response.json();
-                        let table = document.getElementById("FlightTable");
-
-                        for(let element of json) {
-                            let tr = table.insertRow(-1);
-                            for(let key in element) {
-                                let cell = tr.insertCell(-1);
-                                cell.innerHTML =  element[key];
-                            }
-                        }
+                     //come back to this. it sucks and breaks everything. >:(
+                  cancelButton.addEventListener("submit", function(event) {
+                        event.preventDefault();
+                        ticketVar = ticket_id.value;
+                        submitForm2(ticket_id.value);
                     });
+
+                    async function submitForm2(ticket_idVal) {
+                        let formObject = {
+                            ticket_id: ticket_idVal
+                        }
+
+                        console.log(formObject);
+
+                        let response = await fetch("http://localhost:8080/project1/ticket", {
+                            method: "DELETE",
+                            headers: {"Content-Type":"application/json"},
+                            body: JSON.stringify(formObject)
+                        });
+
+                         if(response.status != 200)
+                        {
+                            return response.text().then(function(text) {
+                                alert(text);
+                            });
+                        }
+                        else
+                        {
+                            alert("Tickets successfully cancelled!");
+                            //location.reload();
+                        }
+                    }
             </script>
 </body>
 </html>

@@ -1,5 +1,7 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +30,7 @@ public class User {
     @Column
     private String role;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Ticket> ticketList = new LinkedList<>();
 

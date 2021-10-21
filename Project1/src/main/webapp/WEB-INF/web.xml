@@ -48,13 +48,13 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>bookFlightServlet</servlet-name>
-        <servlet-class>servlets.BookFlightServlet</servlet-class>
+        <servlet-name>ticketServlet</servlet-name>
+        <servlet-class>servlets.TicketServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>bookFlightServlet</servlet-name>
-        <url-pattern>/booking</url-pattern>
+        <servlet-name>ticketServlet</servlet-name>
+        <url-pattern>/ticket</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -68,13 +68,23 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>scheduleFlightServlet</servlet-name>
-        <servlet-class>servlets.ScheduleFlightServlet</servlet-class>
+        <servlet-name>userFlightListServlet</servlet-name>
+        <servlet-class>servlets.UserFlightListServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>scheduleFlightServlet</servlet-name>
-        <url-pattern>/schedule</url-pattern>
+        <servlet-name>userFlightListServlet</servlet-name>
+        <url-pattern>/userFlightList</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>flightServlet</servlet-name>
+        <servlet-class>servlets.FlightServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>flightServlet</servlet-name>
+        <url-pattern>/flight</url-pattern>
     </servlet-mapping>
 
 </web-app>

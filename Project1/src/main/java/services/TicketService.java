@@ -21,14 +21,24 @@ public class TicketService {
         session.save(newTicket);
     }
 
-    public static List<Ticket> getTicketsByUser(int id)
+    public static List<Ticket> getTicketsByUser(User currentUser)
     {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Ticket> query = builder.createQuery(Ticket.class);
         Root<Ticket> root = query.from(Ticket.class);
-        query.select(root).where(builder.equal(root.get("user_id"), id));
+        query.select(root).where(builder.equal(root.get("user"), currentUser));
         List<Ticket> flightList = session.createQuery(query).getResultList();
         return flightList;
+    }
+
+    public static void deleteTicket(Ticket ticket)
+    {
+        session.delete(ticket);
+    }
+
+    public static Ticket getTicketById(int id)
+    {
+        return session.get(Ticket.class, id);
     }
 
 }

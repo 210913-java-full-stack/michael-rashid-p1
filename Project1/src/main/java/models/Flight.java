@@ -31,7 +31,7 @@ public class Flight {
     boolean take_off_status;
 
     @JsonIgnore
-    @OneToMany(mappedBy="flight")
+    @OneToMany(mappedBy="flight", cascade = CascadeType.REMOVE)
     private List<Ticket> ticketList = new LinkedList<>();
 
     public Flight() {

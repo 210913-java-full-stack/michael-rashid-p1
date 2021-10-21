@@ -6,7 +6,6 @@ import services.FlightService;
 import services.LoginService;
 import services.TicketService;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,10 +15,10 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
-public class BookFlightServlet extends HttpServlet {
+public class TicketServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException
     {
         InputStream requestBody = req.getInputStream();
         Scanner sc = new Scanner(requestBody, StandardCharsets.UTF_8.name());
@@ -39,9 +38,8 @@ public class BookFlightServlet extends HttpServlet {
             out.println("Username does not exist.");
         }
         else{
-            System.out.println("Checking userid: " + currentUser.getUser_id());
             //checking if flight they're trying to book exists
-            Flight currentFlight = FlightService.flightExistsById(payload.getFlight_id());
+            Flight currentFlight = FlightService.getFlightById(payload.getFlight_id());
             if(currentFlight != null)
             {
                 //checking if there's enough available seats
@@ -50,7 +48,8 @@ public class BookFlightServlet extends HttpServlet {
                     //then they can book the flight. add ticket
                     Ticket newTicket = new Ticket(payload.getNum_tickets(),false,currentFlight,currentUser);
                     TicketService.saveNewFlight(newTicket);
-                    FlightService.updateNumSeats(payload.getFlight_id(),payload.getNum_tickets());
+                    currentFlight.setNum_seats(currentFlight.getNum_seats()-payload.getNum_tickets());
+                    FlightService.updateNumSeats(currentFlight);
 
                     resp.setStatus(200);
                     out.println("Flight booked successfully for" + currentUser.getfName() + "!");
@@ -71,5 +70,30 @@ public class BookFlightServlet extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException
+    {
+        InputStream requestBody = req.getInputStream();
+        Scanner sc = new Scanner(requestBody, StandardCharsets.UTF_8.name());
+        String jsonText = sc.useDelimiter("\\A").next();
+        ObjectMapper objectMapper = new ObjectMapper();
+        DeleteTicket payload = objectMapper.readValue(jsonText,DeleteTicket.class);
 
+        resp.setContentType("text/plain");
+        PrintWriter out = resp.getWriter();
+        //get ticket from ticket_id
+        Ticket currentTicket = TicketService.getTicketById(payload.getTicket_id());
+
+        if(currentTicket != null)
+        {
+            //ticket exists so delete the ticket
+            TicketService.deleteTicket(currentTicket);
+            resp.setStatus(200);
+        }
+        else
+        {
+            resp.setStatus(406);
+            out.write("Tickets not found, could not delete.");
+        }
+    }
 }

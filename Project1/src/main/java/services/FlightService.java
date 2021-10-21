@@ -36,7 +36,7 @@ public class FlightService {
         return !flightList.isEmpty();
     }
 
-    public static Flight flightExistsById(int flight_id)
+    public static Flight getFlightById(int flight_id)
     {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Flight> query = builder.createQuery(Flight.class);
@@ -70,9 +70,10 @@ public class FlightService {
         return availableSeats;
     }
 
-    public static void updateNumSeats(int id, int subtracted_seats)
+    public static void updateNumSeats(Flight flight)
     {
         //update the num_seats for Flight subtracting the number booked on a ticket
+        session.update(flight);
     }
 
     public static List<Flight> availableFlights() {
@@ -83,5 +84,10 @@ public class FlightService {
         List<Flight> flightList = session.createQuery(query).getResultList();
 
         return flightList;
+    }
+
+    public static void deleteFlight(Flight flight)
+    {
+        session.delete(flight);
     }
 }

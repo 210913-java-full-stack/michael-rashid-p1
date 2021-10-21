@@ -22,7 +22,7 @@ import java.util.Scanner;
 
 public class UserFlightListServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         InputStream requestBody = req.getInputStream();
         Scanner sc = new Scanner(requestBody, StandardCharsets.UTF_8.name());
         String jsonText = sc.useDelimiter("\\A").next();
@@ -33,7 +33,7 @@ public class UserFlightListServlet extends HttpServlet {
         User currentUser = LoginService.getUserByUsername(payload.getUsername());
         if(currentUser != null)
         {
-            List<Ticket> ticketList = TicketService.getTicketsByUser(currentUser.getUser_id());
+            List<Ticket> ticketList = TicketService.getTicketsByUser(currentUser);
             ObjectMapper mapper = new ObjectMapper();
             resp.getWriter().write(mapper.writeValueAsString(ticketList));
             resp.setContentType("application/json");

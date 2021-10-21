@@ -12,7 +12,7 @@
 <b>As an administrator, I can:</b>
 
 - [x] I can schedule a new flight.<br>
-- [ ] I can cancel a flight.<br>
+- [x] I can cancel a flight.<br>
 - [ ] I can view a flight manifest (flight details + passenger list)<br>
 
 <h2>Suggested Bonus User Stories</h2>

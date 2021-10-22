@@ -1,11 +1,16 @@
 body {
-    background-color: #87CEEB;
+    background-color: #F5DEB3;
       margin: 20px;
       width: 75%;
-      border: 3px solid white; //fix this to be reactive lol
+      border: 3px solid black; //fix this to be reactive lol
       padding: 20px;
       text-align: center;
 
+}
+
+hr.dashed {
+  border-top: 3px dashed #bbb;
+  background-color: black;
 }
 
 select {

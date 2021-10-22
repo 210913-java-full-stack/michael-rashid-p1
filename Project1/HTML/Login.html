@@ -8,11 +8,13 @@
     <body>
             <form id="loginForm">
 
-            Enter your username: <input type="text" id="username" /><br>
+            Enter your username: <input type="text" id="username" /><br><br>
             Enter your password: <input type="password" id="password"/> <br>
-            
+            <br>
             <input type="submit" value="Log In">
             </form>
+            <br>
+
 
             <script>
                 const form = document.getElementById("loginForm");
@@ -41,7 +43,7 @@
                         if(response.status != 200)
                         {
                             return response.text().then(function(text) {
-                                document.getElementById("registerForm").reset();
+                                document.getElementById("loginForm").reset();
                                 alert(text);
                             });
                         }

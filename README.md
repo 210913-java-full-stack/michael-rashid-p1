@@ -6,7 +6,7 @@
 
 - [x] I can see all available flights from a city to a city.<br>
 - [x] I can purchase one or more tickets on a flight.<br>
-- [ ] I can check in for my flight.<br>
+- [x] I can check in for my flight.<br>
 - [x] I can cancel my ticket.<br>
 
 <b>As an administrator, I can:</b>

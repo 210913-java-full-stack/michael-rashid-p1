@@ -1,9 +1,9 @@
 package models;
 
-public class DeleteTicket {
+public class TicketID {
     int ticket_id;
 
-    public DeleteTicket() {
+    public TicketID() {
     }
 
     public int getTicket_id() {

@@ -5,6 +5,7 @@ import models.Ticket;
 import models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -31,9 +32,20 @@ public class TicketService {
         return flightList;
     }
 
-    public static void deleteTicket(Ticket ticket)
+    public static void deleteTicket(int ticket_id)
     {
-        session.delete(ticket);
+
+        Transaction tx = session.beginTransaction();
+        Ticket currentTicket = session.get(Ticket.class,ticket_id);
+        session.delete(currentTicket);
+        tx.commit();
+
+        //session.delete(session.get(Ticket.class,ticket_id));
+
+//        Object persistentInstance = session.load(Ticket.class, ticket_id);
+//        if (persistentInstance != null) {
+//            session.delete(persistentInstance);
+//        }
     }
 
     public static Ticket getTicketById(int id)
@@ -41,4 +53,9 @@ public class TicketService {
         return session.get(Ticket.class, id);
     }
 
+    public static void checkInForFlight(Ticket ticket)
+    {
+        ticket.setCheck_in_status(true);
+        session.update(ticket);
+    }
 }

@@ -77,23 +77,49 @@ public class TicketServlet extends HttpServlet {
         Scanner sc = new Scanner(requestBody, StandardCharsets.UTF_8.name());
         String jsonText = sc.useDelimiter("\\A").next();
         ObjectMapper objectMapper = new ObjectMapper();
-        DeleteTicket payload = objectMapper.readValue(jsonText,DeleteTicket.class);
+        TicketID payload = objectMapper.readValue(jsonText, TicketID.class);
 
         resp.setContentType("text/plain");
         PrintWriter out = resp.getWriter();
-        //get ticket from ticket_id
+        //get ticket from ticket_id, make sure it exists
         Ticket currentTicket = TicketService.getTicketById(payload.getTicket_id());
 
         if(currentTicket != null)
         {
             //ticket exists so delete the ticket
-            TicketService.deleteTicket(currentTicket);
+            TicketService.deleteTicket(currentTicket.getTicket_id());
             resp.setStatus(200);
         }
         else
         {
             resp.setStatus(406);
             out.write("Tickets not found, could not delete.");
+        }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        InputStream requestBody = req.getInputStream();
+        Scanner sc = new Scanner(requestBody, StandardCharsets.UTF_8.name());
+        String jsonText = sc.useDelimiter("\\A").next();
+        ObjectMapper objectMapper = new ObjectMapper();
+        TicketID payload = objectMapper.readValue(jsonText, TicketID.class);
+
+        resp.setContentType("text/plain");
+        PrintWriter out = resp.getWriter();
+        //get ticket from ticket_id, make sure it exists
+        Ticket currentTicket = TicketService.getTicketById(payload.getTicket_id());
+
+        if(currentTicket != null)
+        {
+            //ticket exists so delete the ticket
+            TicketService.checkInForFlight(currentTicket);
+            resp.setStatus(200);
+        }
+        else
+        {
+            resp.setStatus(406);
+            out.write("Tickets not found, could not check in.");
         }
     }
 }

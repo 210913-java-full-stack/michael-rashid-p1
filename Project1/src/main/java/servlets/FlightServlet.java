@@ -2,13 +2,9 @@ package servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.DeleteFlight;
-import models.DeleteTicket;
 import models.Flight;
-import models.Ticket;
 import services.FlightService;
-import services.TicketService;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

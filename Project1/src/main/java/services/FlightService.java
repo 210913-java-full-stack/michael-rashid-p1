@@ -88,6 +88,8 @@ public class FlightService {
 
     public static void deleteFlight(Flight flight)
     {
+        session.beginTransaction();
         session.delete(flight);
+        session.getTransaction().commit();
     }
 }

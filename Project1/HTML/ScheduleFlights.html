@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="Project.css">
 
-    <h2>Welcome to Project Airlines!</h2>
-    <h3>Admin Menu</h3>
+    <h2>Schedule a Flight</h2>
 </head>
 <body>
 <form id="scheduleForm">
 
-    <label for="origin_city"> Arrival location:</label>
+    <label for="origin_city"> Depart from:</label>
     <select name="origin_city" id="origin_city">
         <option value="Albuquerque" selected>Albuquerque</option>
         <option value="Chicago">Chicago</option>
@@ -18,7 +17,7 @@
         <option value="Los Angeles">Los Angeles</option>
         <option value="New York">New York</option>
     </select><br>
-    <label for="destination"> Arrival location:</label>
+    <label for="destination"> Travel to:</label>
     <select name="destination" id="destination">
         <option value="Albuquerque" selected>Albuquerque</option>
         <option value="Chicago">Chicago</option>
@@ -31,10 +30,9 @@
     <input type="date" id="flight_date" name="flight_date"
            value="2021-10-20"
            min="2021-10-14" max="2022-12-31">
-
-    <br><input type="submit" value="Schedule Flight">
+    <br>
+    <br><input type="submit" value="Schedule Flight"><br><br>
 </form>
-
             <script>
                 const form = document.getElementById("scheduleForm");
 

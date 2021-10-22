@@ -31,7 +31,7 @@ public class User {
     private String role;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Ticket> ticketList = new LinkedList<>();
 
     public User() {

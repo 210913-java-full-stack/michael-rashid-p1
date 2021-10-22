@@ -18,12 +18,12 @@ public class Ticket {
     private boolean check_in_status;
 
     //there are many tickets per one flight
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(nullable = false)
     private Flight flight;
 
     //there are many tickets per one user
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(nullable=false)
     private User user;
 

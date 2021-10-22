@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="Project.css">
+
+    <h2>Cancel a Flight</h2>
+</head>
+<body>
+<div>
+    <center><table>
+        <thead>
+        <tr>
+            <th>Flight_Id</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Flight_Date</th>
+            <th>Num_Seats</th>
+            <th>Take_Off_Status</th>
+        </tr>
+        </thead>
+        <tbody id="FlightTable">
+
+        </tbody>
+    </table></center><br><br>
+</div>
+<form id="cancelForm">
+    Enter the flight_id for the flight you'd like to cancel:<br>
+    <input type="number" id="flight_id"
+           value = "0"
+           min = "0" max = "40"><br><br>
+    <input type="submit" value="Cancel Tickets">
+</form><br><br>
+
+<script>
+                const form = document.getElementById("cancelForm");
+
+                form.addEventListener("submit", function(event) {
+                    event.preventDefault();
+                    console.log(flight_id.value);
+                    submitForm(flight_id.value);
+                    });
+
+                    async function submitForm(flight_idVal) {
+                        let formObject = {
+                            flight_id: flight_idVal
+                        }
+
+                        console.log(formObject);
+
+                        let response = await fetch("http://localhost:8080/project1/flight", {
+                            method: "DELETE",
+                            headers: {"Content-Type":"application/json"},
+                            body: JSON.stringify(formObject)
+                        });
+
+                         if(response.status != 200)
+                        {
+                            return response.text().then(function(text) {
+                                document.getElementById("cancelForm").reset();
+                                alert(text);
+                            });
+                        }
+                        else
+                        {
+                            document.getElementById("cancelForm").reset();
+                            alert("Flight cancelled successfully!");
+                            location.reload();
+                        }
+                    }
+
+            (async function getFlightList() {
+                let response = await fetch("http://localhost:8080/project1/flightList");
+                let json = await response.json();
+                let table = document.getElementById("FlightTable");
+
+                for(let element of json) {
+                    let tr = table.insertRow(-1);
+                    for(let key in element) {
+                        let cell = tr.insertCell(-1);
+                        cell.innerHTML =  element[key];
+                }
+            }
+        })();
+            </script>
+
+</body>
+</html>

@@ -3,66 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="Project.css">
-
-    <h2>Welcome to Project Airlines!</h2>
-    <h3>Admin Menu</h3>
+    <title>Administrator Menu</title>
 </head>
 <body>
-<form id="scheduleForm">
-
-    <label for="origin_city"> Arrival location:</label>
-    <select name="origin_city" id="origin_city">
-        <option value="Albuquerque" selected>Albuquerque</option>
-        <option value="Chicago">Chicago</option>
-        <option value="Dallas">Dallas</option>
-        <option value="Los Angeles">Los Angeles</option>
-        <option value="New York">New York</option>
-    </select><br>
-    <label for="destination"> Arrival location:</label>
-    <select name="destination" id="destination">
-        <option value="Albuquerque" selected>Albuquerque</option>
-        <option value="Chicago">Chicago</option>
-        <option value="Dallas">Dallas</option>
-        <option value="Los Angeles">Los Angeles</option>
-        <option value="New York">New York</option>
-    </select><br>
-
-    <label for="flight_date">Flight date:</label>
-    <input type="date" id="flight_date" name="flight_date"
-           value="2021-10-20"
-           min="2021-10-14" max="2022-12-31">
-
-    <br><input type="submit" value="Schedule Flight">
-</form>
-
-            <script>
-                const form = document.getElementById("scheduleForm");
-
-                form.addEventListener("submit", function(event) {
-                    event.preventDefault();
-                    console.log(origin_city.value);
-                    console.log(destination.value);
-                    console.log(flight_date.value);
-                    submitForm(origin_city.value, destination.value,flight_date.value);
-                    });
-
-                    async function submitForm(originVal, destinationVal, flightDateVal) {
-                        let formObject = {
-                            origin: originVal,
-                            destination: destinationVal,
-                            flight_date: flightDateVal,
-                            num_seats: 50,
-                            take_off_status: false
-                        }
-
-                        console.log(formObject);
-
-                        let response = await fetch("http://localhost:8080/project1/schedule", {
-                            method: "POST",
-                            headers: {"Content-Type":"application/json"},
-                            body: JSON.stringify(formObject)
-                        });
-                    }
-            </script>
+<center><br>
+    <h2>Administrator Menu</h2>
+    <form action="http://localhost:63342/TeamHProject1/HTML/ScheduleFlights.html">
+        <input type="submit" value="Schedule a Flight" />
+    </form><br>
+    <form action="http://localhost:63342/TeamHProject1/HTML/FlightManifest.html">
+        <input type="submit" value="See Flight Manifest" />
+    </form><br>
+    <form action="http://localhost:63342/TeamHProject1/HTML/CancelFlight.html">
+        <input type="submit" value="Cancel A Flight" />
+    </form><br>
+</center>
 </body>
 </html>

@@ -24,34 +24,28 @@
         </tbody>
     </table></center><br><br>
     <div id="usernameDiv">
-    <form id="usernameForm">
-        Enter your username to view your tickets:<br>
-        <input type="text" id="username"><br><br>
+        <form id="usernameForm">
+            Enter your username to view your tickets:<br>
+            <input type="text" id="username"><br><br>
 
-        <!--Will check if seat number is valid.-->
-        <input type="button" id="userSubmit" value="Submit Username">
-    </form><br><br></div>
-    <div id="cancelDiv">
-        <form id="cancelForm">
-        Enter the ticket_id for the flight you'd like to cancel your tickets for:<br>
-        <input type="number" id="ticket_id"
-               value = "0"
-               min = "0" max = "40"><br><br>
-        <!--Will check if flight_id exists.-->
-        <input type="button" id="ticketSubmit" value="Cancel Ticket">
-    </form><br><br></div>
+            <input type="button" id="userSubmit" value="Submit Username">
+        </form><br><br></div>
+    <div id="checkInDiv">
+        <form id="checkinForm">
+            Enter the ticket_id for the flight you'd like to check in for:<br>
+            <input type="number" id="ticket_id"
+                   value = "0"
+                   min = "0" max = "40"><br><br>
+            <!--Will check if flight_id exists.-->
+            <input type="button" id="ticketSubmit" value="Check In">
+        </form><br><br></div>
 </div>
-
-            <script>
+<script>
                 //listen for button clicks instead since I have two forms.
-                const cancelButton = document.getElementById("ticketSubmit");
+                const checkInButton = document.getElementById("ticketSubmit");
                 const userButton = document.getElementById("userSubmit");
 
-                console.log(ticketSubmit);
-                console.log(userSubmit);
-
-                document.getElementById('cancelDiv').style.display="none";
-                var usernameVar = "hello";
+                document.getElementById('checkInDiv').style.display="none";
 
                 userButton.addEventListener("click", function(event) {
                     event.preventDefault();
@@ -106,14 +100,14 @@
                                 }
                            })();
 
-                           (function showCancelForm(){
-                                document.getElementById('cancelDiv').style.display="block";
+                           (function showCheckinForm(){
+                                document.getElementById('checkInDiv').style.display="block";
                                 document.getElementById('usernameDiv').style.display="none";
                             })();
                         }
                     }
 
-                  cancelButton.addEventListener("click", function(event) {
+                  checkInButton.addEventListener("click", function(event) {
                         event.preventDefault();
                         ticketVar = ticket_id.value;
                         submitForm2(ticket_id.value);
@@ -127,7 +121,7 @@
                         console.log(formObject);
 
                         let response = await fetch("http://localhost:8080/project1/ticket", {
-                            method: "DELETE",
+                            method: "PUT",
                             headers: {"Content-Type":"application/json"},
                             body: JSON.stringify(formObject)
                         });
@@ -140,10 +134,10 @@
                         }
                         else
                         {
-                            alert("Tickets successfully cancelled!");
+                            alert("Checked in for flight!");
                             //location.reload();
                         }
                     }
-            </script>
+</script>
 </body>
 </html>

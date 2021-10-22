@@ -40,6 +40,11 @@
         <!--Will check if flight_id exists.-->
         <input type="button" id="ticketSubmit" value="Cancel Ticket">
     </form><br><br></div>
+    <hr class="dashed">
+    <h3>Menu Options</h3>
+    <a href='http://localhost:63342/TeamHProject1/HTML/BookFlights.html'><button>Book A Flight</button></a><br><br>
+    <a href='http://localhost:63342/TeamHProject1/HTML/CheckIn.html'><button>Check In For Flight</button></a><br><br>
+    <a href='http://localhost:63342/TeamHProject1/HTML/PassengerMenu.html'><button>Back to Main Menu</button></a><br><br><br>
 </div>
 
             <script>
@@ -141,7 +146,8 @@
                         else
                         {
                             alert("Tickets successfully cancelled!");
-                            //location.reload();
+                            //document.getElementById("bookingForm").reset();
+                            location.reload();
                         }
                     }
             </script>

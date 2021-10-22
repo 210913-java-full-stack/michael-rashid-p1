@@ -10,7 +10,7 @@ import javax.persistence.criteria.Root;
 
 import java.util.List;
 
-public class LoginService {
+public class UserService {
     private static SessionFactory sessionFactory = ServiceHolder.getSessionFactory();
     private static Session session = ServiceHolder.getSession();
 
@@ -53,5 +53,21 @@ public class LoginService {
             return userList.get(0);
         }
         return null;
+    }
+
+    public static boolean uniqueUsername(String username)
+    {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+        query.select(root).where(builder.equal(root.get("username"), username));
+        List<User> userList = session.createQuery(query).getResultList();
+
+        return userList.isEmpty();
+    }
+
+    public static void saveNewUser(User newUser)
+    {
+        session.save(newUser);
     }
 }

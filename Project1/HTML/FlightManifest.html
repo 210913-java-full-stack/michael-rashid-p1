@@ -5,7 +5,8 @@
     <link rel="stylesheet" href="Project.css">
     <title>Title</title>
 </head>
-<body>
+<body><br><br>
+<h2>Flight Manifest</h2>
 <div>
     <center><table>
         <thead>
@@ -23,29 +24,15 @@
         </tbody>
     </table></center><br><br>
 </div>
-<div>
-    <center><table>
-        <thead>
-        <tr>
-            <th>Ticket_Id</th>
-            <th>Num_Tickets</th>
-            <th>Check_In_Status</th>
-            <th>Flight_Id</th>
-            <th>User_Id</th>
-            <th>First_Name</th>
-            <th>Last_Name</th>
-        </tr>
-        </thead>
-        <tbody id="PassengerTable">
+<hr class="dashed">
 
-        </tbody>
-    </table></center><br><br>
-</div>
-
+<a href='http://localhost:63342/TeamHProject1/HTML/PassengerManifest.html'><button>See Passenger Manifest</button></a><br><br>
+<a href='http://localhost:63342/TeamHProject1/HTML/CancelFlight.html'><button>Cancel A Flight</button></a><br><br>
+<a href='http://localhost:63342/TeamHProject1/HTML/AdminMenu.html'><button>Back to Admin Menu</button></a><br><br>
 <script>
 
     (async function getFlightList() {
-                let response = await fetch("http://localhost:8080/project1/flightList");
+                let response = await fetch("http://localhost:8080/project1/flight");
                 let json = await response.json();
                 let table = document.getElementById("FlightTable");
 
@@ -57,32 +44,6 @@
                 }
             }
         })();
-
-        //THIS IS WHERE I'VE LEFT OFF.
-
-<!--        (async function getPassengerList() {-->
-<!--            let response2 = await fetch("http://localhost:8080/project1/userFlightList");-->
-<!--            let json2 = await response2.json();-->
-<!--            let table2 = document.getElementById("PassengerTable");-->
-
-<!--            for(let element2 of json2) {-->
-<!--               console.log(element2);-->
-<!--               let parsedElement = {-->
-<!--                    ticket_id: element.ticket_id,-->
-<!--                    num_tickets: element.num_tickets,-->
-<!--                    check_in_status: element.check_in_status,-->
-<!--                    flight_id: element.flight.flight_id,-->
-<!--                    user_id: element.user.user_id,-->
-<!--                    first_name: element.user.fName,-->
-<!--                    last_name: element.user.lName-->
-<!--               }-->
-<!--               let tr = table2.insertRow(-1);-->
-<!--                    for(let key in parsedElement) {-->
-<!--                        let cell = tr.insertCell(-1);-->
-<!--                        cell.innerHTML =  parsedElement[key];-->
-<!--                    }-->
-<!--               }-->
-<!--            })();-->
 </script>
 </body>
 </html>

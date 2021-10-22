@@ -2,7 +2,8 @@ package servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.User;
-import services.RegisterService;
+import services.UserService;
+import utils.FileLogger;
 import utils.NameValidation;
 
 import javax.servlet.RequestDispatcher;
@@ -19,44 +20,44 @@ import java.util.Scanner;
 
 public class RegisterServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
     {
-        InputStream requestBody = req.getInputStream();
-        Scanner sc = new Scanner(requestBody, StandardCharsets.UTF_8.name());
-        String jsonText = sc.useDelimiter("\\A").next();
-        ObjectMapper objectMapper = new ObjectMapper();
-        User payload = objectMapper.readValue(jsonText,User.class);
+        try {
+            InputStream requestBody = req.getInputStream();
+            Scanner sc = new Scanner(requestBody, StandardCharsets.UTF_8.name());
+            String jsonText = sc.useDelimiter("\\A").next();
+            ObjectMapper objectMapper = new ObjectMapper();
+            User payload = objectMapper.readValue(jsonText, User.class);
 
-        if(NameValidation.isValidString(payload.getfName()) && NameValidation.isValidString(payload.getlName()))
-        {
-            if(RegisterService.uniqueUsername(payload.getUsername()))
-            {
-                RegisterService.saveNewUser(payload);
-                resp.setStatus(200);
-            }
-            else
-            {
-                System.out.println("Username already taken.");
+            if (NameValidation.isValidString(payload.getfName()) && NameValidation.isValidString(payload.getlName())) {
+                if (UserService.uniqueUsername(payload.getUsername())) {
+                    UserService.saveNewUser(payload);
+                    resp.setStatus(200);
+                } else {
+                    System.out.println("Username already taken.");
 
-                //throw custom exception?
+                    //throw custom exception?
+                    resp.setContentType("text/plain");
+                    resp.setStatus(406);
+
+                    PrintWriter out = resp.getWriter();
+                    out.println("User not registered. Username must be unique. Please go back and try again.");
+                }
+            } else {
+                System.out.println("Invalid first or last name.");
+
+                //throw custom exception to log to a file?
                 resp.setContentType("text/plain");
                 resp.setStatus(406);
 
                 PrintWriter out = resp.getWriter();
-                out.println("User not registered. Username must be unique. Please go back and try again.");
+                out.println("User not registered. First and/or Last name contained invalid characters.\n" +
+                        "Please go back and try again.");
             }
         }
-        else
+        catch(IOException e)
         {
-            System.out.println("Invalid first or last name.");
-
-            //throw custom exception to log to a file?
-            resp.setContentType("text/plain");
-            resp.setStatus(406);
-
-            PrintWriter out = resp.getWriter();
-            out.println("User not registered. First and/or Last name contained invalid characters.\n" +
-                    "Please go back and try again.");
+            FileLogger.getFileLogger().console().threshold(0).writeLog("No input body to read from.", 0);
         }
     }
 }

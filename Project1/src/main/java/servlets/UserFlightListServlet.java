@@ -1,15 +1,13 @@
 package servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import models.Flight;
 import models.Login;
 import models.Ticket;
 import models.User;
-import services.FlightService;
-import services.LoginService;
+import services.UserService;
 import services.TicketService;
+import utils.FileLogger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,30 +20,48 @@ import java.util.Scanner;
 
 public class UserFlightListServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        InputStream requestBody = req.getInputStream();
-        Scanner sc = new Scanner(requestBody, StandardCharsets.UTF_8.name());
-        String jsonText = sc.useDelimiter("\\A").next();
-        ObjectMapper objectMapper = new ObjectMapper();
-        Login payload = objectMapper.readValue(jsonText,Login.class);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp){
+        try {
+            InputStream requestBody = req.getInputStream();
+            Scanner sc = new Scanner(requestBody, StandardCharsets.UTF_8.name());
+            String jsonText = sc.useDelimiter("\\A").next();
+            ObjectMapper objectMapper = new ObjectMapper();
+            Login payload = objectMapper.readValue(jsonText, Login.class);
 
-        //get user ID from username
-        User currentUser = LoginService.getUserByUsername(payload.getUsername());
-        if(currentUser != null)
+            //get user ID from username
+            User currentUser = UserService.getUserByUsername(payload.getUsername());
+            if (currentUser != null) {
+                List<Ticket> ticketList = TicketService.getTicketsByUser(currentUser);
+                ObjectMapper mapper = new ObjectMapper();
+                resp.getWriter().write(mapper.writeValueAsString(ticketList));
+                resp.setContentType("application/json");
+                resp.setStatus(200);
+            } else {
+                resp.setStatus(406);
+                resp.setContentType("text/plain");
+                PrintWriter out = resp.getWriter();
+
+                out.write("Username does not exist!");
+            }
+        }
+        catch(IOException e)
         {
-            List<Ticket> ticketList = TicketService.getTicketsByUser(currentUser);
+            FileLogger.getFileLogger().console().threshold(0).writeLog("No input body to read from.", 0);
+        }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp){
+        try {
+            List<Ticket> ticketList = TicketService.getTicketList();
             ObjectMapper mapper = new ObjectMapper();
             resp.getWriter().write(mapper.writeValueAsString(ticketList));
             resp.setContentType("application/json");
             resp.setStatus(200);
         }
-        else
+        catch(IOException e)
         {
-            resp.setStatus(406);
-            resp.setContentType("text/plain");
-           PrintWriter out = resp.getWriter();
-
-           out.write("Username does not exist!");
+            FileLogger.getFileLogger().console().threshold(0).writeLog("Unable to get Writer for response body.", 0);
         }
     }
 }

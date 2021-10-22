@@ -80,10 +80,16 @@ public class FlightService {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Flight> query = builder.createQuery(Flight.class);
         Root<Flight> root = query.from(Flight.class);
-        query.select(root).where(builder.equal(root.get("take_off_status"), false)).orderBy(builder.asc(root.get("origin")));
-        List<Flight> flightList = session.createQuery(query).getResultList();
+        query.orderBy(builder.asc(root.get("origin")));
+        return session.createQuery(query).getResultList();
+    }
+    public static void initiateTakeoff(Flight flight)
+    {
+        flight.setTake_off_status(true);
 
-        return flightList;
+        session.beginTransaction();
+        session.update(flight);
+        session.getTransaction().commit();
     }
 
     public static void deleteFlight(Flight flight)

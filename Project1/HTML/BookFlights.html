@@ -36,11 +36,16 @@
             How many tickets would you like for this flight?<br>
             <input type="number" id="num_tickets"
                    value = "0"
-                   min = "0" max = "4"><br><br>
+                   min = "0" max = "50"><br><br>
             <!--Will check if seat number is valid.-->
         <input type="submit" value="Book Tickets">
-        </form><br><br>
-        <a href="MyFlights.html">See My Flights</a><br>
+        </form><br>
+
+    <hr class="dashed">
+    <h3>Menu Options</h3>
+    <a href='http://localhost:63342/TeamHProject1/HTML/MyFlights.html'><button>See My Flights</button></a><br><br>
+    <a href='http://localhost:63342/TeamHProject1/HTML/PassengerMenu.html'><button>Back to Main Menu</button></a><br>
+    <br>
 
         <script>
                 const form = document.getElementById("bookingForm");
@@ -77,11 +82,12 @@
                         else
                         {
                             alert("Flight booked successfully!");
+                            document.getElementById("bookingForm").reset();
                         }
                     }
 
             (async function getFlightList() {
-                let response = await fetch("http://localhost:8080/project1/flightList");
+                let response = await fetch("http://localhost:8080/project1/flight");
                 let json = await response.json();
                 let table = document.getElementById("FlightTable");
 

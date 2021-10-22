@@ -6,19 +6,80 @@
         <h3>Pilot Menu</h3>
     </head>
     <body>
-            <form method="post" action="http://localhost:8080/project1">
+    <div>
+        <center><table>
+            <thead>
+            <tr>
+                <th>Flight_Id</th>
+                <th>Origin</th>
+                <th>Destination</th>
+                <th>Flight_Date</th>
+                <th>Num_Seats</th>
+                <th>Take_Off_Status</th>
+            </tr>
+            </thead>
+            <tbody id="FlightTable">
 
-                List of Flights : 
-                <UL>
-                    <li>Albuquerque</li>
-                    <li>Chicago</li>
-                    <li>Dallas</li>
-                    <li>Los Angeles</li>
-                    <li>New York</li>
-                </UL>
+            </tbody>
+        </table></center><br><br>
+    </div>
+    <div id="checkInDiv">
+        <form id="takeoffForm">
+            Enter the flight_id:<br>
+            <input type="number" id="flight_id"
+                   value = "0"
+                   min = "0" max = "40"><br><br>
+            <!--Will check if flight_id exists.-->
+            <input type="button" id="flightSubmit" value="Initiate Takeoff">
+        </form><br><br>
+    </div>
+    <script>
+                    const takeoffButton = document.getElementById("flightSubmit");
 
-                <input type="submit" value="Initiate Takeoff">
+                    takeoffButton.addEventListener("click", function(event) {
+                        event.preventDefault();
+                        submitForm(flight_id.value);
+                    });
 
-            </form>
+                    async function submitForm(flight_idVal) {
+                        let formObject = {
+                            flight_id: flight_idVal
+                        }
+
+                        console.log(formObject);
+
+                        let response = await fetch("http://localhost:8080/project1/flight", {
+                            method: "PUT",
+                            headers: {"Content-Type":"application/json"},
+                            body: JSON.stringify(formObject)
+                        });
+
+                         if(response.status != 200)
+                        {
+                            return response.text().then(function(text) {
+                                alert(text);
+                            });
+                        }
+                        else
+                        {
+                            alert("Takeoff initiated!");
+                            location.reload();
+                        }
+                    }
+
+         (async function getFlightList() {
+                let response = await fetch("http://localhost:8080/project1/flight");
+                let json = await response.json();
+                let table = document.getElementById("FlightTable");
+
+                for(let element of json) {
+                    let tr = table.insertRow(-1);
+                    for(let key in element) {
+                        let cell = tr.insertCell(-1);
+                        cell.innerHTML =  element[key];
+                }
+            }
+        })();
+    </script>
     </body>
 </html>

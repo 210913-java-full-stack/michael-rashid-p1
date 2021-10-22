@@ -18,7 +18,6 @@ public class TicketService {
 
     public static void saveNewFlight(Ticket newTicket)
     {
-        //System.out.println(newTicket.getTicket_id());
         session.save(newTicket);
     }
 
@@ -28,24 +27,15 @@ public class TicketService {
         CriteriaQuery<Ticket> query = builder.createQuery(Ticket.class);
         Root<Ticket> root = query.from(Ticket.class);
         query.select(root).where(builder.equal(root.get("user"), currentUser));
-        List<Ticket> flightList = session.createQuery(query).getResultList();
-        return flightList;
+        return session.createQuery(query).getResultList();
     }
 
     public static void deleteTicket(int ticket_id)
     {
-
         Transaction tx = session.beginTransaction();
         Ticket currentTicket = session.get(Ticket.class,ticket_id);
         session.delete(currentTicket);
         tx.commit();
-
-        //session.delete(session.get(Ticket.class,ticket_id));
-
-//        Object persistentInstance = session.load(Ticket.class, ticket_id);
-//        if (persistentInstance != null) {
-//            session.delete(persistentInstance);
-//        }
     }
 
     public static Ticket getTicketById(int id)
@@ -57,5 +47,16 @@ public class TicketService {
     {
         ticket.setCheck_in_status(true);
         session.update(ticket);
+    }
+
+    public static List<Ticket> getTicketList()
+    {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Ticket> query = builder.createQuery(Ticket.class);
+        query.from(Ticket.class);
+        List<Ticket> ticketList = session.createQuery(query).getResultList();
+
+        return ticketList;
+
     }
 }

@@ -41,7 +41,7 @@
 - [x] Communication is done with JSON in HTTP request and response bodies.<br>
 - [x] Abstract all JDBC away with Hibernate<br>
 - [x] Documentation (all classes and methods have adequate Javadoc comments)
-- [ ] All Exceptions are caught and logged to a file
+- [x] All Exceptions are caught and logged to a file
 - [ ] 80%+ Unit test line coverage for service-layer methods(Test as much as possible, ask trainer if unsure)
 
 <h2>Bonus Features:</h2>

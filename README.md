@@ -13,10 +13,10 @@
 
 - [x] I can schedule a new flight.<br>
 - [x] I can cancel a flight.<br>
-- [ ] I can view a flight manifest (flight details + passenger list)<br>
+- [x] I can view a flight manifest (flight details + passenger list)<br>
 
 <h2>Suggested Bonus User Stories</h2>
-- [ ] As an administrator, I can cancel a ticket on any flight.<br>
+- [x] As an administrator, I can cancel a ticket on any flight.<br>
 - [ ] As an pilot, I can initiate takeoff of a flight. (No more new tickets or cancellations)<br>
 
 <h1>Tech Stack:</h1>

@@ -21,6 +21,8 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
     {
         try {
+            //arguably, this should be a get request I think. but I'm taking in the username and password
+            //and putting it into my login model
             InputStream requestBody = req.getInputStream();
             Scanner sc = new Scanner(requestBody, StandardCharsets.UTF_8.name());
             String jsonText = sc.useDelimiter("\\A").next();
@@ -29,6 +31,7 @@ public class LoginServlet extends HttpServlet {
 
             //password validation here
             User loggedIn = UserService.checkPassword(payload.getUsername(), payload.getPassword());
+            //if checkPassword returned a user, then we successfully logged in.
             if (loggedIn != null) {
                 resp.setStatus(200);
                 System.out.println("Successful login!");

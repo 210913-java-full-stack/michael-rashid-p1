@@ -1,11 +1,8 @@
 package services;
 
 import models.Flight;
-import models.Ticket;
-import models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import repos.FlightRepo;
 
 import javax.persistence.criteria.*;
 import java.util.List;

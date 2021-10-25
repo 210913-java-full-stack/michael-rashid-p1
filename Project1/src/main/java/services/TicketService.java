@@ -57,6 +57,5 @@ public class TicketService {
         List<Ticket> ticketList = session.createQuery(query).getResultList();
 
         return ticketList;
-
     }
 }

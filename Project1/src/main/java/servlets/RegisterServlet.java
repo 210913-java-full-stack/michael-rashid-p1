@@ -23,20 +23,23 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
     {
         try {
+            //taking in new user information and mapping it to my user class
             InputStream requestBody = req.getInputStream();
             Scanner sc = new Scanner(requestBody, StandardCharsets.UTF_8.name());
             String jsonText = sc.useDelimiter("\\A").next();
             ObjectMapper objectMapper = new ObjectMapper();
             User payload = objectMapper.readValue(jsonText, User.class);
 
+            //check to make sure first and last name don't contain weird characters
             if (NameValidation.isValidString(payload.getfName()) && NameValidation.isValidString(payload.getlName())) {
+                //checks to see if username is unique
                 if (UserService.uniqueUsername(payload.getUsername())) {
+                    //if it passes both checks, then save the user
                     UserService.saveNewUser(payload);
                     resp.setStatus(200);
                 } else {
                     System.out.println("Username already taken.");
 
-                    //throw custom exception?
                     resp.setContentType("text/plain");
                     resp.setStatus(406);
 
@@ -46,7 +49,6 @@ public class RegisterServlet extends HttpServlet {
             } else {
                 System.out.println("Invalid first or last name.");
 
-                //throw custom exception to log to a file?
                 resp.setContentType("text/plain");
                 resp.setStatus(406);
 

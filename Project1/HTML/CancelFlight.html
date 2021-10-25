@@ -74,7 +74,7 @@
                     }
 
             (async function getFlightList() {
-                let response = await fetch("http://localhost:8080/project1/flightList");
+                let response = await fetch("http://localhost:8080/project1/flight");
                 let json = await response.json();
                 let table = document.getElementById("FlightTable");
 

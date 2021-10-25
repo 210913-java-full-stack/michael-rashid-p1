@@ -34,7 +34,6 @@ public class TicketServlet extends HttpServlet {
             //get the user from the username, make sure they exist
             User currentUser = UserService.getUserByUsername(payload.getUsername());
             if (currentUser == null) {
-                //throw exception?
                 resp.setStatus(406);
                 out.println("Username does not exist.");
             } else {

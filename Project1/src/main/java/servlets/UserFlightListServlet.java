@@ -22,14 +22,17 @@ public class UserFlightListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp){
         try {
+            //this should probably be a get, but I'm getting a username from the user to display their flight list
             InputStream requestBody = req.getInputStream();
             Scanner sc = new Scanner(requestBody, StandardCharsets.UTF_8.name());
             String jsonText = sc.useDelimiter("\\A").next();
             ObjectMapper objectMapper = new ObjectMapper();
             Login payload = objectMapper.readValue(jsonText, Login.class);
 
-            //get user ID from username
+            //get user from username
             User currentUser = UserService.getUserByUsername(payload.getUsername());
+
+            //if that user exists, get their list of tickets
             if (currentUser != null) {
                 List<Ticket> ticketList = TicketService.getTicketsByUser(currentUser);
                 ObjectMapper mapper = new ObjectMapper();
@@ -53,6 +56,7 @@ public class UserFlightListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp){
         try {
+            //get the list of all tickets that exist
             List<Ticket> ticketList = TicketService.getTicketList();
             ObjectMapper mapper = new ObjectMapper();
             resp.getWriter().write(mapper.writeValueAsString(ticketList));

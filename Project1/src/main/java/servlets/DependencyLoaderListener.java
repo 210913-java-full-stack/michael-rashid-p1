@@ -18,12 +18,15 @@ public class DependencyLoaderListener implements ServletContextListener {
         config.addAnnotatedClass(Ticket.class);
         config.addAnnotatedClass(User.class);
 
+        //service holder holders both the session factory and session. I'm calling the setters here
+        //to actually use the config to build them.
         ServiceHolder.setSessionFactory(config.buildSessionFactory());
         ServiceHolder.setSession(ServiceHolder.getSessionFactory().openSession());
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
+        //use the getter to grab the stored session and then close it
         ServiceHolder.getSession().close();
     }
 }

@@ -87,13 +87,23 @@ public class TicketServlet extends HttpServlet {
             //get ticket from ticket_id, make sure it exists
             Ticket currentTicket = TicketService.getTicketById(payload.getTicket_id());
 
+            //ticket exists
             if (currentTicket != null) {
-                //ticket exists so delete the ticket
-                TicketService.deleteTicket(currentTicket.getTicket_id());
-                resp.setStatus(200);
+                if(currentTicket.isCheck_in_status())
+                {
+                    //if the customer has already checked in, their tickets can't be cancelled
+                    resp.setStatus(406);
+                    out.write("Tickets already checked in, can not cancel tickets.");
+                }
+                else
+                {
+                    //otherwise, you can cancel them
+                    TicketService.deleteTicket(currentTicket.getTicket_id());
+                    resp.setStatus(200);
+                }
             } else {
                 resp.setStatus(406);
-                out.write("Tickets not found, could not delete.");
+                out.write("Tickets not found, could not cancel tickets.");
             }
         }
         catch(IOException e)
